@@ -6,6 +6,7 @@ class Solution:
     
 sol = Solution()
 
+
 print(sol.cToF(20))
 print(sol.cToF(0))
 print(sol.cToF(100))
