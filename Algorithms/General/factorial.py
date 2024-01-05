@@ -6,14 +6,25 @@ import timeit
 def factorial_recursive(N):
     if N == 0:
         return 1
-    ans = N
     if N != 1:
-        ans *= factorial_recursive(N-1) 
-    return ans
+        N *= factorial_recursive(N-1) 
+    return N
 
-print(factorial_recursive(100))
-result = timeit.timeit(stmt='factorial_recursive(995)', globals=globals(), number=50)
+def factTR(N, a): #slowest!!!
+    if (N == 0):  
+        return a 
+
+    return factTR(N-1, N*a)
+
+#print(factTR(10,1))
+
+#print(factorial_recursive(100))
+result = timeit.timeit(stmt='factTR(992, 1)', globals=globals(), number=500)
 print(result)
-print(factorial(100))
-result = timeit.timeit(stmt='factorial(995)', globals=globals(), number=50)
+result = timeit.timeit(stmt='factorial_recursive(992)', globals=globals(), number=500)
 print(result)
+
+#print(factorial(100))
+result = timeit.timeit(stmt='factorial(992)', globals=globals(), number=500)
+print(result)
+
