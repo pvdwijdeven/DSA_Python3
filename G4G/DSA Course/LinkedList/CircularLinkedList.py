@@ -41,7 +41,7 @@ def insertInHead(head, x):
     temp = Node(x)
     # code here
     if head == None:
-        temp.next = temp
+        temp.next = temp  # type: ignore
         return temp
     temp = Node(x)
     temp.next = head.next
@@ -54,7 +54,7 @@ def insertInTail(head, x):
     temp = Node(x)
     # code here
     if head == None:
-        temp.next = temp
+        temp.next = temp  # type: ignore
         return temp
     temp = Node(x)
     temp.next = head.next
@@ -65,6 +65,7 @@ def insertInTail(head, x):
 
 def deleteTail(head):
     curr = head
+    prev = Node(None)
     if head == None or curr.next == head:
         return None
     while curr.next != head:
@@ -115,7 +116,7 @@ def insertAtPosition(head, pos, data):
     c_pos = 1
     if head == None:
         if pos == 1:
-            temp.next = temp
+            temp.next = temp  # type: ignore
             return temp
         else:
             return None

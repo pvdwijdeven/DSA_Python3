@@ -10,14 +10,15 @@ def listFromString(slist):
     prev = Node(None)
     prevprev = None
     head = prev
+    cur = Node(None)
     for x in llist:
         cur = Node(x)
         prev.next = cur  # type: ignore
-        prev.prev = prevprev
+        prev.prev = prevprev  # type: ignore
         prevprev = prev
         prev = cur
     cur.next = head.next
-    head.next.prev = cur
+    head.next.prev = cur  # type: ignore
     return head.next
 
 
