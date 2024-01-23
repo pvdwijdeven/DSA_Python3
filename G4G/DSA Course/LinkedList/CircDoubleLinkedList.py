@@ -45,5 +45,23 @@ def isCircular(head):
     return 1
 
 
+def compareCLL(head1, head2):
+    # code here
+    curr1 = head1
+    curr2 = head2
+
+    while True:
+        if curr1.data != curr2.data:
+            return False
+        curr1 = curr1.next
+        curr2 = curr2.next
+
+        if curr1.next == head1 and curr2.next == head2:
+            return True
+
+        if curr1.next == head1 or curr2.next == head2:
+            return False
+
+
 L1 = listFromString("1<->2<->3<->4<->5")
 print(displayList(L1))
