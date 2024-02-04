@@ -29,3 +29,17 @@ d.reverse()
 print(list(d))
 d.rotate(3)
 print(list(d))
+
+
+def eraseAt(deq, x):
+    # code here
+    del deq[x]
+
+
+# Function to erase the elements in range start (inclusive), end (exclusive).
+def eraseInRange(deq, s, e):
+    # code here
+    size = e - s
+    while size != 0:
+        del deq[s]
+        size -= 1

@@ -1,0 +1,31 @@
+def atoi(s):
+    # Code here
+    total = 0
+    first = True
+    dot = False
+    neg = False
+    numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    for char in s:
+        print(char, total)
+        if char in numbers:
+            if not dot:
+                total = total * 10 + int(char)
+            else:
+                total = total * 0.1 + int(char)
+        elif char == ".":
+            if not dot:
+                dot = True
+            else:
+                return -1
+        elif char == "-":
+            if first:
+                neg = True
+            else:
+                return -1
+        else:
+            return -1
+        first = False
+    return -1 * total if neg else total
+
+
+print(atoi("-366"))
