@@ -126,7 +126,7 @@ class BT:
                 )
             return res
 
-        return True if scanTree(self.root) else False
+        return scanTree(self.root)
 
     def getHeight(self):
         # return height of tree
