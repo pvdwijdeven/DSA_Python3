@@ -43,7 +43,7 @@ class BT:
     def print_tree(self, val="data", left="left", right="right"):
         # function to print tree in a grahical way
         def display(root, val=val, left=left, right=right):
-            """Returns list of strings, width, height, and horizontal coordinate of the root."""
+            # Returns list of strings, width, height, and horizontal coordinate of the root.
             # No child.
             if getattr(root, right) is None and getattr(root, left) is None:
                 line = "%s" % getattr(root, val)
@@ -90,7 +90,7 @@ class BT:
                 left += [n * " "] * (q - p)
             elif q < p:
                 right += [m * " "] * (p - q)
-            zipped_lines = zip(left, right)
+            zipped_lines = zip(left, right, strict=True)
             lines = [first_line, second_line] + [
                 a + u * " " + b for a, b in zipped_lines
             ]
