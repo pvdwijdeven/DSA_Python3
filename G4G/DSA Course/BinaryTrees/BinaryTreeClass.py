@@ -8,7 +8,7 @@ class Node:
 class BT:
     def __init__(self, arr=None):
         # create empty root
-        if arr == None:
+        if not arr:
             self.root = Node(None)
         else:
             self.buildTree(arr)
@@ -103,7 +103,7 @@ class BT:
     def isBalanced(self):
         # function to check if tree is balanced
         def Height(root):
-            if root is None:
+            if not root:
                 return 0
             leftheight, rightheight = Height(root.left), Height(root.right)
             if leftheight < 0 or rightheight < 0 or abs(leftheight - rightheight) > 1:
@@ -119,11 +119,10 @@ class BT:
             if root != None:
                 res = res and scanTree(root.left)
                 res = res and scanTree(root.right)
-                lval = 0 if root.left == None else root.left.data
-                rval = 0 if root.right == None else root.right.data
+                lval = 0 if not root.left else root.left.data
+                rval = 0 if not root.right else root.right.data
                 return res and (
-                    (root.data == (lval + rval))
-                    or (root.left == None and root.right == None)
+                    (root.data == (lval + rval)) or (not root.left and not root.right)
                 )
             return res
 
@@ -132,11 +131,7 @@ class BT:
     def getHeight(self):
         # return height of tree
         def height(root):
-            return (
-                0
-                if root is None
-                else max(height(root.left) + 1, height(root.right) + 1)
-            )
+            return 0 if not root else max(height(root.left) + 1, height(root.right) + 1)
 
         return height(self.root)
 
@@ -144,7 +139,7 @@ class BT:
         # get pre-order traversal array of tree
         def preOrder(root):
             arr = []
-            if root != None:
+            if root:
                 arr.append(root.data)
                 arr += preOrder(root.left)
                 arr += preOrder(root.right)
@@ -156,7 +151,7 @@ class BT:
         # get in-order traversal array of tree
         def inOrder(root):
             arr = []
-            if root != None:
+            if root:
                 arr += inOrder(root.left)
                 arr.append(root.data)
                 arr += inOrder(root.right)
@@ -168,7 +163,7 @@ class BT:
         # get post-order traversal array of tree
         def postOrder(root):
             arr = []
-            if root != None:
+            if root:
                 arr += postOrder(root.left)
                 arr += postOrder(root.right)
                 arr.append(root.data)
@@ -187,9 +182,9 @@ class BT:
             while queue != []:
                 node = queue.pop(0)
                 arr.append(node.data)
-                if node.left != None:
+                if node.left:
                     queue.append(node.left)
-                if node.right != None:
+                if node.right:
                     queue.append(node.right)
             return arr
 
@@ -200,7 +195,7 @@ class BT:
             # code here
             res = True
 
-            if root1 != None and root2 != None:
+            if root1 and root2:
                 if root1.data != root2.data:
                     return False
                 res = isIdentical(root1.left, root2.left)
