@@ -63,7 +63,7 @@ class LinkedList:
             return -1
         cur = self.head
         index = 0
-        while cur.next != None:
+        while cur.next:
             if cur.data == x:
                 return index
             index += 1
@@ -80,10 +80,10 @@ class LinkedList:
     # Function to insert a node at the end of the linked list.
     def insertAtEnd(self, x):
         # code here
-        if self.head == None:
+        if not self.head:
             return Node(x)
         cur = self.head
-        while cur.next != None:
+        while cur.next:
             cur = cur.next
         newNode = Node(x)
         cur.next = newNode
@@ -98,7 +98,7 @@ class LinkedList:
         for i in range(1, pos):
             if curr:
                 curr = curr.next
-                if curr == None:
+                if not curr:
                     return self.head
         if curr:
             temp.next = curr.next
@@ -107,7 +107,7 @@ class LinkedList:
 
     def deleteHead(self):
         # code here
-        if self.head == None:
+        if not self.head:
             return self.head
         else:
             temp = self.head.next
@@ -160,7 +160,7 @@ class LinkedList:
         else:
             curr = self.head
 
-            while curr.next != None and curr.next.data < data:
+            while curr.next and curr.next.data < data:
                 curr = curr.next
 
             temp.next = curr.next
@@ -168,11 +168,11 @@ class LinkedList:
             return self.head
 
     def insertInMid(self, node):
-        if self.head == None:
+        if not self.head:
             return node
         slow = self.head
         fast = self.head
-        while fast.next != None and fast.next.next != None:
+        while fast.next and fast.next.next:
             if slow:
                 slow = slow.next
             fast = fast.next.next
@@ -188,7 +188,7 @@ class LinkedList:
             return True
         curD = curN.data
         direction = "equal"
-        while curN.next != None:
+        while curN.next:
             curN = curN.next
             if curD > curN.data:
                 if direction == "equal" or direction == "decreasing":
@@ -229,10 +229,10 @@ class LinkedList:
 
     def joinTheLists(self, head2):
         # code here
-        if self.head == None:
+        if not self.head:
             return head2
         cur = self.head
-        while cur.next != None:
+        while cur.next:
             cur = cur.next
         cur.next = head2
         return self.head
@@ -242,7 +242,7 @@ class LinkedList:
         if not self.head:
             return None
         cur = self.head
-        while cur.next != None:
+        while cur.next:
             if cur.data == cur.next.data:
                 cur.next = cur.next.next
             else:
@@ -255,7 +255,7 @@ class LinkedList:
         if not self.head:
             return None
         cur = self.head
-        while cur.next != None:
+        while cur.next:
             stack.append(cur)
             cur = cur.next
         head = cur
@@ -285,7 +285,7 @@ class LinkedList:
         cur = self.head
         if not cur:
             return 0
-        while cur.next != None:
+        while cur.next:
             if cur.data < mn:
                 mn = cur.data
             cur = cur.next
@@ -301,7 +301,7 @@ class LinkedList:
             return not cur2
         if not cur2:
             return not cur1
-        while cur1.next != None and cur2.next != None:
+        while cur1.next and cur2.next:
             if cur1.data != cur2.data:
                 return False
             cur1 = cur1.next
