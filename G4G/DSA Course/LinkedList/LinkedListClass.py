@@ -33,7 +33,7 @@ class LinkedList:
         curr = self.head
         while True:
             array.append(curr.data)
-            if curr.next == None:
+            if not curr.next:
                 break
             curr = curr.next
         return array
@@ -53,7 +53,7 @@ class LinkedList:
             return 0
         cur = self.head
         total = cur.data
-        while cur.next != None:
+        while cur.next:
             cur = cur.next
             total += cur.data
         return total
