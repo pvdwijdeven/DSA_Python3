@@ -28,6 +28,8 @@ class LinkedList:
 
     def printList(self):
         array = []
+        if not self.head:
+            return array
         curr = self.head
         while True:
             array.append(curr.data)
@@ -37,6 +39,8 @@ class LinkedList:
         return array
 
     def getCount(self):
+        if not self.head:
+            return 0
         cur = self.head
         count = 1
         while cur.next:
@@ -45,6 +49,8 @@ class LinkedList:
         return count
 
     def sumOfElements(self):
+        if not self.head:
+            return 0
         cur = self.head
         total = cur.data
         while cur.next != None:
@@ -53,6 +59,8 @@ class LinkedList:
         return total
 
     def searchLinkedList(self, x):
+        if not self.head:
+            return -1
         cur = self.head
         index = 0
         while cur.next != None:
@@ -106,11 +114,10 @@ class LinkedList:
             return temp
 
     def deleteTail(self):
-        # code here
-        if not self.head or not self.head.next:
-            return None
         cur = self.head
-        while cur.next.next != None:
+        if not cur or not cur.next:
+            return None
+        while cur.next.next:
             cur = cur.next
         cur.next = None
         return self.head
