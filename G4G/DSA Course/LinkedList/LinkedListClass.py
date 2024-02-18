@@ -2,9 +2,9 @@
 
 
 class Node:
-    def __init__(self, data):
+    def __init__(self, data, next=None):
         self.data = data
-        self.next = None
+        self.next = next
 
 
 class LinkedList:
@@ -96,11 +96,13 @@ class LinkedList:
             return temp
         curr = self.head
         for i in range(1, pos):
-            curr = curr.next
-            if curr == None:
-                return self.head
-        temp.next = curr.next
-        curr.next = temp
+            if curr:
+                curr = curr.next
+                if curr == None:
+                    return self.head
+        if curr:
+            temp.next = curr.next
+            curr.next = temp
         return self.head
 
     def deleteHead(self):
@@ -117,9 +119,11 @@ class LinkedList:
         cur = self.head
         if not cur or not cur.next:
             return None
-        while cur.next.next:
+        while True:
+            if not cur or not cur.next or not cur.next.next:
+                break
             cur = cur.next
-        cur.next = None
+            cur.next = None
         return self.head
 
     def deleteNode(self, ptr):
@@ -129,14 +133,17 @@ class LinkedList:
 
     def deleteAtPosition(self, pos):
         curr = self.head
+        if not curr:
+            return None
         c = 1
         if pos == 1:
-            return self.head.next
+            return curr.next
 
         while curr:
             if c + 1 == pos:
-                temp = curr.next.next
-                curr.next = temp
+                if curr.next:
+                    temp = curr.next.next
+                    curr.next = temp
             curr = curr.next
             c += 1
         return self.head
@@ -166,16 +173,20 @@ class LinkedList:
         slow = self.head
         fast = self.head
         while fast.next != None and fast.next.next != None:
-            slow = slow.next
+            if slow:
+                slow = slow.next
             fast = fast.next.next
-        node.next = slow.next
-        slow.next = node
+        if slow:
+            node.next = slow.next
+            slow.next = node
         return self.head
 
     def isSorted(self):
         # code here
         curN = self.head
-        curD = self.head.data
+        if not curN:
+            return True
+        curD = curN.data
         direction = "equal"
         while curN.next != None:
             curN = curN.next
@@ -209,11 +220,12 @@ class LinkedList:
                 n -= 1
             else:
                 cur1 = cur1.next
-                cur2 = cur2.next
+                if cur2:
+                    cur2 = cur2.next
         if n:
             return -1
-
-        return cur2.data
+        if cur2:
+            return cur2.data
 
     def joinTheLists(self, head2):
         # code here
@@ -257,7 +269,9 @@ class LinkedList:
         # code here
         mx = 0
         cur = self.head
-        while cur.next != None:
+        if not cur:
+            return 0
+        while cur.next:
             if cur.data > mx:
                 mx = cur.data
             cur = cur.next
@@ -269,6 +283,8 @@ class LinkedList:
         # code here
         mn = 10**199
         cur = self.head
+        if not cur:
+            return 0
         while cur.next != None:
             if cur.data < mn:
                 mn = cur.data
@@ -281,6 +297,10 @@ class LinkedList:
         # Code here
         cur1 = self.head
         cur2 = head2
+        if not cur1:
+            return not cur2
+        if not cur2:
+            return not cur1
         while cur1.next != None and cur2.next != None:
             if cur1.data != cur2.data:
                 return False
