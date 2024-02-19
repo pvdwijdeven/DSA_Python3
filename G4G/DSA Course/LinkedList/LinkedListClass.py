@@ -7,9 +7,6 @@ class Node:
         self.next = next
 
 
-# TODO: choose between list and string
-
-
 class LinkedList:
     def __init__(self, arr=None):
         if not arr:
