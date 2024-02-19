@@ -18,31 +18,46 @@ class Node:
             print(self.next.data)
 
 
-def listFromString(slist):
-    llist = [int(x) for x in slist.split("<->")]
-    prev = Node(None)
-    prevprev = None
-    head = prev
-    cur = Node(None)
-    for x in llist:
-        cur = Node(x)
-        prev.next = cur  # type: ignore
-        prev.prev = prevprev  # type: ignore
-        prevprev = prev
-        prev = cur
-    cur.prev = prevprev  # type: ignore
-    return head.next
+class DoubleLinkedList:
+    def __init__(self, arr=None):
+        if not arr:
+            self.head = Node(None)
+        else:
+            if isinstance(arr, list):
+                self.listFromArr(arr)
+            else:
+                self.listFromString(arr)
 
+    def listFromString(self, slist):
+        llist = [int(x) for x in slist.split("<->")]
+        return self.listFromArr(llist)
 
-def displayList(head):
-    # code here
-    res = []
-    cur = head
-    while cur.next != None:
+    def listFromArr(self, arr):
+        prevNode = Node(None)
+        prevprev = None
+        head = prevNode
+        cur = Node(None)
+        for x in arr:
+            cur = Node(x)
+            prevNode.next = cur
+            prevNode.prev = prevprev
+            prevprev = prevNode
+            prevNode = cur
+        cur.prev = prevprev
+        self.head = head.next
+        return head.next
+
+    def printList(self):
+        # code here
+        res = []
+        cur = self.head
+        if not cur:
+            return []
+        while cur.next != None:
+            res.append(cur.data)
+            cur = cur.next
         res.append(cur.data)
-        cur = cur.next
-    res.append(cur.data)
-    return res
+        return res
 
 
 def insertInhead(head, data):
@@ -181,19 +196,22 @@ def sortedInsert(head, x):
     return head
 
 
-L1 = listFromString("1<->2<->3<->4<->5")
-L1 = insertInhead(L1, 20)
-L1 = insertInTail(L1, 44)
-L1 = insertAtPosition(L1, 2, 50)
-print(displayList(L1))
+L1 = DoubleLinkedList("1<->2<->3<->4<->5")
+print(L1.printList())
+
+# L1 = listFromString("1<->2<->3<->4<->5")
+# L1 = insertInhead(L1, 20)
+# L1 = insertInTail(L1, 44)
+# L1 = insertAtPosition(L1, 2, 50)
+# print(displayList(L1))
 
 
-L2 = listFromString("2<->4<->5")
-L2 = insertAtPosition(L2, 2, 6)
-print(displayList(L2))
-printall(L2)
-print(displayList(reverseDLL(L1)))
+# L2 = listFromString("2<->4<->5")
+# L2 = insertAtPosition(L2, 2, 6)
+# print(displayList(L2))
+# printall(L2)
+# print(displayList(reverseDLL(L1)))
 
-L3 = listFromString("1")  # <->9<->16<->25<->78")
-L3 = sortedInsert(L3, 0)
-printall(L3)
+# L3 = listFromString("1")  # <->9<->16<->25<->78")
+# L3 = sortedInsert(L3, 0)
+# printall(L3)
