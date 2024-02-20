@@ -18,12 +18,12 @@ class Node:
         print(self.data, end=":")
         print(" prev: ", end="")
         if not self.prev:
-            print("None", end=",")
+            print("NONE", end=",")
         else:
             print(self.prev.data, end=",")
         print(" next: ", end="")
         if not self.next:
-            print("None")
+            print("NONE")
         else:
             print(self.next.data)
 
@@ -56,6 +56,8 @@ class DoubleLinkedList:
             prevprev = prevNode
             prevNode = cur
         cur.prev = prevprev
+        if head.next:
+            head.next.prev = None
         self.head = head.next
         return head.next
 
@@ -78,6 +80,7 @@ class DoubleLinkedList:
         temp.next = self.head
         if self.head:
             self.head.prev = temp
+        self.head = temp
         return temp
 
     def insertInTail(self, data):
@@ -168,12 +171,11 @@ class DoubleLinkedList:
 
     def reverseDLL(self):
         # return head after reversing
-        if self.head == None:
+        if not self.head:
             return None
         cur = self.head
         while cur.next:
             cur.next, cur.prev = cur.prev, cur.next
-            print(cur.data)
             cur = cur.prev
         cur.next, cur.prev = cur.prev, cur.next
         self.head = cur
@@ -207,6 +209,7 @@ class DoubleLinkedList:
 
 
 L1 = DoubleLinkedList("1<->2<->3<->4<->5")
+L1.printall()
 print(L1.printList())
 
 L1.insertInhead(20)
@@ -219,6 +222,7 @@ L2.insertAtPosition(2, 6)
 print(L2.printList())
 L2.printall()
 L2.reverseDLL()
+# L2.printall()
 print(L2.printList())
 
 L3 = DoubleLinkedList([1, 9, 16, 25, 78])

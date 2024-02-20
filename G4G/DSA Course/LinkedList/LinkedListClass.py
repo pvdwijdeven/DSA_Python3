@@ -107,9 +107,10 @@ class LinkedList:
         temp = Node(data)
         if pos == 0:
             temp.next = self.head
+            self.head = temp
             return temp
         curr = self.head
-        for i in range(1, pos):
+        for i in range(0, pos):
             if curr:
                 curr = curr.next
                 if not curr:
@@ -287,11 +288,12 @@ class LinkedList:
         while cur.next:
             stack.append(cur)
             cur = cur.next
-        head = cur
+        self.head = cur
         while stack != []:
             cur.next = stack.pop()
             cur = cur.next
         cur.next = None
+        self.tail = cur
         return self.head
 
     def maximum(self):
@@ -351,11 +353,13 @@ print(L1.sumOfElements())
 print(L1.searchLinkedList(3))
 L1.insertAtBegining(9)
 L1.insertAtEnd(8)
-L1.insertAtPosition(7, 3)
+L1.insertAtPosition(2, 3)
+print(L1.printList())
 L1.deleteHead()
 print(L1.printList())
 l2 = "1->1->1->3->3->3->4->4"
 L2 = LinkedList(l2)
+print(L2.printList())
 L2.reverseList()
 print(L2.printList())
 
