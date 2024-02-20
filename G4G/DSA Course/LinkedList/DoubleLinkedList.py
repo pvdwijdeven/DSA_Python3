@@ -191,10 +191,10 @@ class DoubleLinkedList:
             cur.prev = temp
             temp.next = cur
             return temp
-        while cur.next != None:
+        while cur.next:
             if cur.data >= x:
                 temp = Node(x)
-                if cur.prev != None:
+                if cur.prev:
                     cur.prev.next = temp
                 temp.prev = cur.prev
                 temp.next = cur
