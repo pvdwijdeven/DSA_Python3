@@ -46,6 +46,7 @@ class LinkedList:
             if not curr.next:
                 break
             curr = curr.next
+        print(self.head.data, self.tail.data)
         return array
 
     def getCount(self):
@@ -110,7 +111,7 @@ class LinkedList:
             self.head = temp
             return temp
         curr = self.head
-        for i in range(0, pos):
+        for i in range(0, pos - 1):
             if curr:
                 curr = curr.next
                 if not curr:
@@ -142,7 +143,7 @@ class LinkedList:
                 break
             prev = cur
             cur = cur.next
-            cur.next = None
+        prev.next = None
         self.tail = prev
         return self.head
 
@@ -151,6 +152,7 @@ class LinkedList:
         # does not work if prt == tail!!!
         if self.tail == ptr:
             print("Error: tail cannot be removed!")
+            return
         if self.head == ptr:
             self.head = ptr.next
         temp = ptr.next
@@ -162,41 +164,59 @@ class LinkedList:
         curr = self.head
         if not curr:
             return None
-        c = 1
-        if pos == 1:
+        c = 0
+        if pos == 0:
             self.head = curr.next
             return curr.next
         while curr:
             if c + 1 == pos and curr.next:
                 temp = curr.next.next
                 curr.next = temp
+            elif c + 1 == pos:
+                self.tail = curr
+                return self.head
             curr = curr.next
             c += 1
-        if not temp:
-            self.tail = curr
         return self.head
 
     def insertInSorted(self, data):
         # Insert value in sorted list
+
         temp = Node(data)
         if not self.head:
             return temp
-        elif data < self.head.data:
-            temp.next = self.head
-            self.head = temp
-            return temp
+        if self.head.data <= self.tail.data:
+            if data < self.head.data:
+                temp.next = self.head
+                self.head = temp
+                return temp
+            else:
+                curr = self.head
+                while curr.next and curr.next.data < data:
+                    curr = curr.next
+                temp.next = curr.next
+                curr.next = temp
+                if self.tail == curr:
+                    self.tail = temp
+                return self.head
         else:
-            curr = self.head
-            while curr.next and curr.next.data < data:
-                curr = curr.next
-            temp.next = curr.next
-            curr.next = temp
-            if self.tail == curr:
-                self.tail = temp
-            return self.head
+            if data > self.head.data:
+                temp.next = self.head
+                self.head = temp
+                return temp
+            else:
+                curr = self.head
+                while curr.next and curr.next.data > data:
+                    curr = curr.next
+                temp.next = curr.next
+                curr.next = temp
+                if self.tail == curr:
+                    self.tail = temp
+                return self.head
 
     def insertInMid(self, node):
         # Insert node in middle of linked list
+        node = Node(node)
         if not self.head:
             return node
         slow = self.head
@@ -233,7 +253,8 @@ class LinkedList:
         return True
 
     def getNthFromLast(self, n):
-        # Get value of nth node from end of linked list
+        # Get value of nth node from end of linked list (0-based)
+        n = n + 1
         if n == 0:
             return -1
         if not self.head:
@@ -260,7 +281,7 @@ class LinkedList:
         cur = self.head
         while cur.next:
             cur = cur.next
-        cur.next = head2
+        cur.next = head2.head
         self.tail = head2.tail
         return self.head
 
@@ -327,7 +348,7 @@ class LinkedList:
     def areIdentical(self, head2):
         # Check if list head2 is identical to current linked list
         cur1 = self.head
-        cur2 = head2
+        cur2 = head2.head
         if not cur1:
             return not cur2
         if not cur2:
@@ -353,15 +374,46 @@ print(L1.sumOfElements())
 print(L1.searchLinkedList(3))
 L1.insertAtBegining(9)
 L1.insertAtEnd(8)
-L1.insertAtPosition(2, 3)
+L1.insertAtPosition(3, 99)
 print(L1.printList())
 L1.deleteHead()
+L1.deleteTail()
 print(L1.printList())
+print(L1.isSorted())
+if L1.head and L1.head.next and L1.head.next.next:
+    L1.deleteNode(L1.head.next.next)
+print(L1.printList())
+
+L1.deleteAtPosition(2)
+print(L1.printList())
+
+
 l2 = "1->1->1->3->3->3->4->4"
 L2 = LinkedList(l2)
 print(L2.printList())
 L2.reverseList()
 print(L2.printList())
+L2.removeDuplicates()
+print(L2.printList())
+print(L2.isSorted())
+L2.insertInSorted(2)
+print(L2.printList())
+L2.insertInMid(99)
+print(L2.printList())
+L2.insertInMid(-99)
+print(L2.printList())
+print(L2.getNthFromLast(2))
 
-L3 = LinkedList([1, 2, 3, 4, 5, 6, 7, 8, 9])
+L3 = LinkedList([1, 2, 3, 4, 6, 7, 8, 9])
 print(L3.printList())
+L3.insertInSorted(5)
+print(L3.printList())
+
+L4 = LinkedList([1, 2, 3, 4, 5])
+L5 = LinkedList([6, 7, 8, 9])
+L4.joinTheLists(L5)
+print(L4.printList())
+print(L4.areIdentical(L5))
+print(L4.areIdentical(L3))
+print(L2.maximum())
+print(L2.minimum())
