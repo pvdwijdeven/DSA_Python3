@@ -111,7 +111,7 @@ class LinkedList:
             self.head = temp
             return temp
         curr = self.head
-        for i in range(0, pos - 1):
+        for _i in range(0, pos - 1):
             if curr:
                 curr = curr.next
                 if not curr:
