@@ -149,9 +149,8 @@ class LinkedList:
 
     def deleteNode(self, ptr):
         # delete node as indicated by given pointer ptr
-        # does not work if prt == tail!!!
         if self.tail == ptr:
-            print("Error: tail cannot be removed!")
+            self.deleteTail()
             return
         if self.head == ptr:
             self.head = ptr.next
