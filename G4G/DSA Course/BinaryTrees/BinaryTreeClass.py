@@ -116,7 +116,7 @@ class BT:
         # check if parent is always sum of children
         def scanTree(root):
             res = True
-            if root != None:
+            if root:
                 res = res and scanTree(root.left)
                 res = res and scanTree(root.right)
                 lval = 0 if not root.left else root.left.data
