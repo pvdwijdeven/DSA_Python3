@@ -34,34 +34,34 @@ class DoubleLinkedList:
             self.head = Node(None)
         else:
             if isinstance(arr, list):
-                self.listFromArr(arr)
+                self.list_from_arr(arr)
             else:
-                self.listFromString(arr)
+                self.list_from_string(arr)
 
-    def listFromString(self, slist):
+    def list_from_string(self, slist):
         llist = [int(x) for x in slist.split("<->")]
-        return self.listFromArr(llist)
+        return self.list_from_arr(llist)
 
-    def listFromArr(self, arr):
+    def list_from_arr(self, arr):
         if arr == []:
             self.head = Node(None)
             return self.head
-        prevNode = Node(None)
-        prevprev = None
-        head = prevNode
+        prev_node = Node(None)
+        prev_prev = None
+        head = prev_node
         for x in arr:
             cur = Node(x)
-            prevNode.next = cur
-            prevNode.prev = prevprev
-            prevprev = prevNode
-            prevNode = cur
-        cur.prev = prevprev
+            prev_node.next = cur
+            prev_node.prev = prev_prev
+            prev_prev = prev_node
+            prev_node = cur
+        cur.prev = prev_prev
         if head.next:
             head.next.prev = None
         self.head = head.next
         return head.next
 
-    def printList(self):
+    def print_list(self):
         # code here
         res = []
         cur = self.head
@@ -73,7 +73,7 @@ class DoubleLinkedList:
         res.append(cur.data)
         return res
 
-    def insertInhead(self, data):
+    def insert_in_head(self, data):
         # code here
         temp = Node(data)
         temp.prev = None
@@ -83,7 +83,7 @@ class DoubleLinkedList:
         self.head = temp
         return temp
 
-    def insertInTail(self, data):
+    def insert_in_tail(self, data):
         # code here
         temp = Node(data)
         if not self.head:
@@ -95,23 +95,23 @@ class DoubleLinkedList:
         temp.prev = cur
         return self.head
 
-    def insertAtPosition(self, p, data):
+    def insert_at_position(self, p, data):
         temp = Node(data)
-        curr = self.head
+        cur = self.head
         for i in range(0, p):
-            if curr:
-                curr = curr.next
-            if not curr:
+            if cur:
+                cur = cur.next
+            if not cur:
                 return self.head
-        if curr:
-            temp.next = curr.next
-            curr.next = temp
-            temp.prev = curr
+        if cur:
+            temp.next = cur.next
+            cur.next = temp
+            temp.prev = cur
             if temp.next != None:
                 temp.next.prev = temp
         return self.head
 
-    def delHead(self):
+    def delete_head(self):
         if not self.head:
             return None
         if not self.head.next:
@@ -121,7 +121,7 @@ class DoubleLinkedList:
             self.head.prev = None
             return self.head
 
-    def deleteNode(self, x):
+    def delete_node(self, x):
         # Code here
         cur = self.head
         for pos in range(1, x):
@@ -134,7 +134,7 @@ class DoubleLinkedList:
                 cur.next.prev = cur.prev
         return self.head
 
-    def deleteTail(self):
+    def delete_tail(self):
         # code here
         if not self.head:
             return None
@@ -148,19 +148,19 @@ class DoubleLinkedList:
         prev.next = None
         return self.head
 
-    def findMiddle(self):
+    def find_middle(self):
         # code here
         if self.head:
             curl = self.head
-            curr = self.head.prev
-        if curr and curl:
-            while curl != curr:
-                if curr and curl:
+            cur = self.head.prev
+        if cur and curl:
+            while curl != cur:
+                if cur and curl:
                     curl = curl.next
-                    curr = curr.prev
-            return curr.data
+                    cur = cur.prev
+            return cur.data
 
-    def printall(self):
+    def print_all(self):
         cur = self.head
         if cur:
             while cur.next:
@@ -169,7 +169,7 @@ class DoubleLinkedList:
             cur.print()
         return
 
-    def reverseDLL(self):
+    def reverse_list(self):
         # return head after reversing
         if not self.head:
             return None
@@ -181,7 +181,7 @@ class DoubleLinkedList:
         self.head = cur
         return cur
 
-    def sortedInsert(self, x):
+    def sorted_insert(self, x):
         # code here
         cur = self.head
         if not cur:
@@ -209,22 +209,22 @@ class DoubleLinkedList:
 
 
 L1 = DoubleLinkedList("1<->2<->3<->4<->5")
-L1.printall()
-print(L1.printList())
+L1.print_all()
+print(L1.print_list())
 
-L1.insertInhead(20)
-L1.insertInTail(44)
-L1.insertAtPosition(2, 50)
-print(L1.printList())
+L1.insert_in_head(20)
+L1.insert_in_tail(44)
+L1.insert_at_position(2, 50)
+print(L1.print_list())
 
 L2 = DoubleLinkedList("2<->4<->5")
-L2.insertAtPosition(2, 6)
-print(L2.printList())
-L2.printall()
-L2.reverseDLL()
+L2.insert_at_position(2, 6)
+print(L2.print_list())
+L2.print_all()
+L2.reverse_list()
 # L2.printall()
-print(L2.printList())
+print(L2.print_list())
 
 L3 = DoubleLinkedList([1, 9, 16, 25, 78])
-L3.sortedInsert(0)
-print(L3.printList())
+L3.sorted_insert(0)
+print(L3.print_list())

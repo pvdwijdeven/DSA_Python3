@@ -11,32 +11,32 @@ class BT:
         if not arr:
             self.root = Node(None)
         else:
-            self.buildTree(arr)
+            self.build_tree(arr)
 
     def get_root(self):
         # function to retrieve root for external programs
         return self.root
 
-    def buildTree(self, lst):
+    def build_tree(self, lst):
         # funtion to build tree from an array, where "N" represents empty node
-        def grab(it, nextlevel):
+        def grab(it, next_level):
             value = next(it, "N")
             if value != "N":
                 node = Node(value)
-                nextlevel.append(node)
+                next_level.append(node)
                 return node
 
         # Create the root of the tree
         it = iter(lst)
-        nextlevel = []
-        self.root = grab(it, nextlevel)
+        next_level = []
+        self.root = grab(it, next_level)
 
-        while nextlevel:
-            level = nextlevel
-            nextlevel = []
+        while next_level:
+            level = next_level
+            next_level = []
             for node in level:
-                node.left = grab(it, nextlevel)
-                node.right = grab(it, nextlevel)
+                node.left = grab(it, next_level)
+                node.right = grab(it, next_level)
 
         return self.root
 
@@ -100,25 +100,25 @@ class BT:
         for line in lines:
             print(line)
 
-    def isBalanced(self):
+    def is_balanced(self):
         # function to check if tree is balanced
-        def Height(root):
+        def height(root):
             if not root:
                 return 0
-            leftheight, rightheight = Height(root.left), Height(root.right)
+            leftheight, rightheight = height(root.left), height(root.right)
             if leftheight < 0 or rightheight < 0 or abs(leftheight - rightheight) > 1:
                 return -1
             return max(leftheight, rightheight) + 1
 
-        return Height(self.root) >= 0
+        return height(self.root) >= 0
 
-    def isSumProperty(self):
+    def is_sum_property(self):
         # check if parent is always sum of children
-        def scanTree(root):
+        def scan_tree(root):
             res = True
             if root:
-                res = res and scanTree(root.left)
-                res = res and scanTree(root.right)
+                res = res and scan_tree(root.left)
+                res = res and scan_tree(root.right)
                 lval = 0 if not root.left else root.left.data
                 rval = 0 if not root.right else root.right.data
                 return res and (
@@ -126,54 +126,54 @@ class BT:
                 )
             return res
 
-        return scanTree(self.root)
+        return scan_tree(self.root)
 
-    def getHeight(self):
+    def get_height(self):
         # return height of tree
         def height(root):
             return 0 if not root else max(height(root.left) + 1, height(root.right) + 1)
 
         return height(self.root)
 
-    def getPreOrder(self):
+    def get_pre_order(self):
         # get pre-order traversal array of tree
-        def preOrder(root):
+        def pre_order(root):
             arr = []
             if root:
                 arr.append(root.data)
-                arr += preOrder(root.left)
-                arr += preOrder(root.right)
+                arr += pre_order(root.left)
+                arr += pre_order(root.right)
             return arr
 
-        return preOrder(self.root)
+        return pre_order(self.root)
 
-    def getInOrder(self):
+    def get_in_order(self):
         # get in-order traversal array of tree
-        def inOrder(root):
+        def in_order(root):
             arr = []
             if root:
-                arr += inOrder(root.left)
+                arr += in_order(root.left)
                 arr.append(root.data)
-                arr += inOrder(root.right)
+                arr += in_order(root.right)
             return arr
 
-        return inOrder(self.root)
+        return in_order(self.root)
 
-    def getPostOrder(self):
+    def get_post_order(self):
         # get post-order traversal array of tree
-        def postOrder(root):
+        def post_order(root):
             arr = []
             if root:
-                arr += postOrder(root.left)
-                arr += postOrder(root.right)
+                arr += post_order(root.left)
+                arr += post_order(root.right)
                 arr.append(root.data)
             return arr
 
-        return postOrder(self.root)
+        return post_order(self.root)
 
-    def getLevelOrder(self):
+    def get_level_order(self):
         # get level-order traversal array of tree
-        def levelOrder(root):
+        def level_order(root):
             if not root:
                 return []
             arr = []
@@ -188,38 +188,39 @@ class BT:
                     queue.append(node.right)
             return arr
 
-        return levelOrder(self.root)
+        return level_order(self.root)
 
-    def compareTree(self, root2):
-        def isIdentical(root1, root2):
+    @classmethod
+    def compare_tree(cls, root1, root2):
+        def is_identical(root1, root2):
             # code here
             res = True
 
             if root1 and root2:
                 if root1.data != root2.data:
                     return False
-                res = isIdentical(root1.left, root2.left)
-                res = res and isIdentical(root1.right, root2.right)
+                res = is_identical(root1.left, root2.left)
+                res = res and is_identical(root1.right, root2.right)
             else:
                 if root1 != root2:
                     return False
             return res
 
-        return isIdentical(self.root, root2.root)
+        return is_identical(root1.root, root2.root)
 
 
 bt = BT([3, 2, 1, 4, 5])
 bt.print_tree()
-print(bt.isBalanced())
-print(bt.isSumProperty())
-print(bt.getHeight())
-print(bt.getPreOrder())
-print(bt.getInOrder())
-print(bt.getPostOrder())
-print(bt.getLevelOrder())
+print(bt.is_balanced())
+print(bt.is_sum_property())
+print(bt.get_height())
+print(bt.get_pre_order())
+print(bt.get_in_order())
+print(bt.get_post_order())
+print(bt.get_level_order())
 
 bt2 = BT([3, 2, 1, 4, 5])
 bt3 = BT([3, "N", 1, 4, 5])
 bt3.print_tree()
-print(bt.compareTree(bt2))
-print(bt.compareTree(bt3))
+print(BT.compare_tree(bt, bt2))
+print(BT.compare_tree(bt, bt3))
