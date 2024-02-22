@@ -208,23 +208,23 @@ class DoubleLinkedList:
         return self.head
 
 
-L1 = DoubleLinkedList("1<->2<->3<->4<->5")
-L1.print_all()
-print(L1.print_list())
+if __name__ == "__main__":
+    L1 = DoubleLinkedList("1<->2<->3<->4<->5")
+    L1.print_all()
+    print(L1.print_list())
 
-L1.insert_in_head(20)
-L1.insert_in_tail(44)
-L1.insert_at_position(2, 50)
-print(L1.print_list())
+    L1.insert_in_head(20)
+    L1.insert_in_tail(44)
+    L1.insert_at_position(2, 50)
+    print(L1.print_list())
 
-L2 = DoubleLinkedList("2<->4<->5")
-L2.insert_at_position(2, 6)
-print(L2.print_list())
-L2.print_all()
-L2.reverse_list()
-# L2.printall()
-print(L2.print_list())
+    L2 = DoubleLinkedList("2<->4<->5")
+    L2.insert_at_position(2, 6)
+    print(L2.print_list())
+    L2.print_all()
+    L2.reverse_list()
+    print(L2.print_list())
 
-L3 = DoubleLinkedList([1, 9, 16, 25, 78])
-L3.sorted_insert(0)
-print(L3.print_list())
+    L3 = DoubleLinkedList([1, 9, 16, 25, 78])
+    L3.sorted_insert(0)
+    print(L3.print_list())

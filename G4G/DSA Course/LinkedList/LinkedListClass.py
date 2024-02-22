@@ -366,27 +366,28 @@ class LinkedList:
         return True
 
 
-l1 = "1->2->3->4->5"
-L1 = LinkedList()
-L1.list_from_string(l1)
-print(L1.print_list())
-print(L1.get_count())
-print(L1.sum_of_elements())
-print(L1.search_linked_list(3))
-L1.insert_at_beginning(9)
-L1.insert_at_end(8)
-L1.insert_at_position(3, 99)
-print(L1.print_list())
-L1.delete_head()
-L1.delete_tail()
-print(L1.print_list())
-print(L1.is_sorted())
-if L1.head and L1.head.next and L1.head.next.next:
-    L1.delete_node(L1.head.next.next)
-print(L1.print_list())
+if __name__ == "__main__":
+    l1 = "1->2->3->4->5"
+    L1 = LinkedList()
+    L1.list_from_string(l1)
+    print(L1.print_list())
+    print(L1.get_count())
+    print(L1.sum_of_elements())
+    print(L1.search_linked_list(3))
+    L1.insert_at_beginning(9)
+    L1.insert_at_end(8)
+    L1.insert_at_position(3, 99)
+    print(L1.print_list())
+    L1.delete_head()
+    L1.delete_tail()
+    print(L1.print_list())
+    print(L1.is_sorted())
+    if L1.head and L1.head.next and L1.head.next.next:
+        L1.delete_node(L1.head.next.next)
+    print(L1.print_list())
 
-L1.delete_at_position(2)
-print(L1.print_list())
+    L1.delete_at_position(2)
+    print(L1.print_list())
 
 
 l2 = "1->1->1->3->3->3->4->4"
