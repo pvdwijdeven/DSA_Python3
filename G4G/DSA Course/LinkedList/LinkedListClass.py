@@ -1,31 +1,34 @@
 # Linked list class
 
 
+from typing import Any
+
+
 class Node:
 
-    def __init__(self, data, next=None):
+    def __init__(self, data, next=None) -> None:
         self.data = data
         self.next = next
 
 
 class LinkedList:
 
-    def __init__(self, arr=None):
+    def __init__(self, arr=None) -> None:
         if not arr:
-            self.head = Node(None)
-            self.tail = Node(None)
+            self.head = Node(data=None)
+            self.tail = Node(data=None)
         else:
             if isinstance(arr, list):
                 self.list_from_arr(arr=arr)
             else:
                 self.list_from_string(list_string=arr)
 
-    def list_from_string(self, list_string):
+    def list_from_string(self, list_string) -> Node | None:
         # create linked list from string with "->"
         llist = [int(x) for x in list_string.split("->")]
         return self.list_from_arr(arr=llist)
 
-    def list_from_arr(self, arr):
+    def list_from_arr(self, arr) -> Node | None:
         # create linked list from array
         prev = Node(data=None)
         head = prev
@@ -37,7 +40,7 @@ class LinkedList:
         self.head = head.next
         return head.next
 
-    def print_list(self):
+    def print_list(self) -> list[Any]:
         # return linked list as array
         array = []
         if not self.head:
@@ -51,7 +54,7 @@ class LinkedList:
         print(self.head.data, self.tail.data)
         return array
 
-    def get_count(self):
+    def get_count(self) -> int:
         # return number of elements in linked list
         if not self.head:
             return 0
@@ -62,7 +65,7 @@ class LinkedList:
             cur = cur.next
         return count
 
-    def sum_of_elements(self):
+    def sum_of_elements(self) -> int:
         # return sum of elements in linked list
         if not self.head:
             return 0
@@ -73,7 +76,7 @@ class LinkedList:
             total += cur.data
         return total
 
-    def search_linked_list(self, value):
+    def search_linked_list(self, value) -> int:
         # search for value in linked list and return first found
         if not self.head:
             return -1
@@ -86,14 +89,14 @@ class LinkedList:
             cur = cur.next
         return index
 
-    def insert_at_beginning(self, value):
+    def insert_at_beginning(self, value) -> Node:
         # Insert value at beginning at linked list
         cur = Node(data=value)
         cur.next = self.head
         self.head = cur
         return cur
 
-    def insert_at_end(self, value):
+    def insert_at_end(self, value) -> Node:
         # Insert a node at the end of the linked list.
         if not self.head:
             return Node(data=value)
@@ -105,7 +108,7 @@ class LinkedList:
         self.tail = newNode
         return self.head
 
-    def insert_at_position(self, pos, data):
+    def insert_at_position(self, pos, data) -> Node | None:
         # Insert a node at the given posiition
         temp = Node(data=data)
         if pos == 0:
@@ -125,7 +128,7 @@ class LinkedList:
             self.tail = temp
         return self.head
 
-    def delete_head(self):
+    def delete_head(self) -> Node | None:
         # Delete head of linked list
         if not self.head:
             return self.head
@@ -135,7 +138,7 @@ class LinkedList:
             self.head = temp
             return temp
 
-    def delete_tail(self):
+    def delete_tail(self) -> Node | None:
         # Delete tail of linked list
         cur = self.head
         if not cur or not cur.next:
@@ -149,7 +152,7 @@ class LinkedList:
         self.tail = prev
         return self.head
 
-    def delete_node(self, ptr):
+    def delete_node(self, ptr) -> None:
         # delete node as indicated by given pointer ptr
         if self.tail == ptr:
             self.delete_tail()
@@ -160,7 +163,7 @@ class LinkedList:
         ptr.data = temp.data
         ptr.next = temp.next
 
-    def delete_at_position(self, pos):
+    def delete_at_position(self, pos) -> Node | None:
         # delete node at given position
         cur = self.head
         if not cur:
@@ -180,7 +183,7 @@ class LinkedList:
             c += 1
         return self.head
 
-    def insert_in_sorted(self, data):
+    def insert_in_sorted(self, data) -> Node | None:
         # Insert value in sorted list
 
         temp = Node(data=data)
@@ -215,7 +218,7 @@ class LinkedList:
                     self.tail = temp
                 return self.head
 
-    def insert_in_mid(self, node):
+    def insert_in_mid(self, node) -> Node | None:
         # Insert node in middle of linked list
         node = Node(data=node)
         if not self.head:
@@ -231,7 +234,7 @@ class LinkedList:
             slow.next = node
         return self.head
 
-    def is_sorted(self):
+    def is_sorted(self) -> bool:
         # Check if linked list is sorted
         curN = self.head
         if not curN:
@@ -253,7 +256,7 @@ class LinkedList:
             curD = curN.data
         return True
 
-    def get_Nth_from_last(self, N):
+    def get_Nth_from_last(self, N) -> Any | None:
         # Get value of nth node from end of linked list (0-based)
         N = N + 1
         if N == 0:
@@ -276,7 +279,7 @@ class LinkedList:
             return cur2.data
 
     @classmethod
-    def join_the_lists(cls, head1, head2):
+    def join_the_lists(cls, head1, head2) -> Any:
         # Join linked list head2 with current one
         if not head1.head:
             return head2.head
@@ -287,7 +290,7 @@ class LinkedList:
         head1.tail = head2.head
         return head1
 
-    def remove_duplicates(self):
+    def remove_duplicates(self) -> Node | None:
         # Remove all duplicates in linked list
         if not self.head:
             return None
@@ -301,7 +304,7 @@ class LinkedList:
             self.tail = cur
         return self.head
 
-    def reverse_list(self):
+    def reverse_list(self) -> Node | None:
         # Reverse the list
         stack = []
         if not self.head:
@@ -319,7 +322,7 @@ class LinkedList:
         self.tail = cur
         return self.head
 
-    def maximum(self):
+    def maximum(self) -> int:
         # Get maximum number of linked list
         mx = 0
         cur = self.head
@@ -333,7 +336,7 @@ class LinkedList:
             mx = cur.data
         return mx
 
-    def minimum(self):
+    def minimum(self) -> int:
         # get minimum number of linked list
         mn = 10**199
         cur = self.head
@@ -348,7 +351,7 @@ class LinkedList:
         return mn
 
     @classmethod
-    def are_identical(cls, head1, head2):
+    def are_identical(cls, head1, head2) -> bool:
         # Check if list head2 is identical to current linked list
         cur1 = head1.head
         cur2 = head2.head
@@ -375,7 +378,7 @@ if __name__ == "__main__":
     print(L1.print_list())
     print(L1.get_count())
     print(L1.sum_of_elements())
-    print(L1.search_linked_list(3))
+    print(L1.search_linked_list(value=3))
     L1.insert_at_beginning(value=9)
     L1.insert_at_end(value=8)
     L1.insert_at_position(pos=3, data=99)
