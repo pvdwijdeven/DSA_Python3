@@ -89,14 +89,14 @@ class LinkedList:
             cur = cur.next
         return index
 
-    def insert_at_beginning(self, value) -> Node:
+    def insert_in_head(self, value) -> Node:
         # Insert value at beginning at linked list
         cur = Node(data=value)
         cur.next = self.head
         self.head = cur
         return cur
 
-    def insert_at_end(self, value) -> Node:
+    def insert_in_tail(self, value) -> Node:
         # Insert a node at the end of the linked list.
         if not self.head:
             return Node(data=value)
@@ -108,9 +108,9 @@ class LinkedList:
         self.tail = newNode
         return self.head
 
-    def insert_at_position(self, pos, data) -> Node | None:
+    def insert_at_position(self, pos, value) -> Node | None:
         # Insert a node at the given posiition
-        temp = Node(data=data)
+        temp = Node(data=value)
         if pos == 0:
             temp.next = self.head
             self.head = temp
@@ -163,20 +163,20 @@ class LinkedList:
         ptr.data = temp.data
         ptr.next = temp.next
 
-    def delete_at_position(self, pos) -> Node | None:
+    def delete_Nth_node(self, N) -> Node | None:
         # delete node at given position
         cur = self.head
         if not cur:
             return None
         c = 0
-        if pos == 0:
+        if N == 0:
             self.head = cur.next
             return cur.next
         while cur:
-            if c + 1 == pos and cur.next:
+            if c + 1 == N and cur.next:
                 temp = cur.next.next
                 cur.next = temp
-            elif c + 1 == pos:
+            elif c + 1 == N:
                 self.tail = cur
                 return self.head
             cur = cur.next
@@ -379,9 +379,9 @@ if __name__ == "__main__":
     print(L1.get_count())
     print(L1.sum_of_elements())
     print(L1.search_linked_list(value=3))
-    L1.insert_at_beginning(value=9)
-    L1.insert_at_end(value=8)
-    L1.insert_at_position(pos=3, data=99)
+    L1.insert_in_head(value=9)
+    L1.insert_in_tail(value=8)
+    L1.insert_at_position(pos=3, value=99)
     print(L1.print_list())
     L1.delete_head()
     L1.delete_tail()
@@ -391,7 +391,7 @@ if __name__ == "__main__":
         L1.delete_node(ptr=L1.head.next.next)
     print(L1.print_list())
 
-    L1.delete_at_position(pos=2)
+    L1.delete_Nth_node(N=2)
     print(L1.print_list())
 
     l2 = "1->1->1->3->3->3->4->4"
