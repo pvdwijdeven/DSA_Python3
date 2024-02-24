@@ -2,8 +2,8 @@ from typing import Any
 
 
 class Node:
-    def __init__(self, val) -> None:
-        self.data = val
+    def __init__(self, data) -> None:
+        self.data = data
         self.left = None
         self.right = None
 
@@ -12,7 +12,7 @@ class BT:
     def __init__(self, arr=None) -> None:
         # create empty root
         if not arr:
-            self.root = Node(val=None)
+            self.root = Node(data=None)
         else:
             self.build_tree(lst=arr)
 
@@ -25,7 +25,7 @@ class BT:
         def grab(it, next_level) -> Node | None:
             value = next(it, "N")
             if value != "N":
-                node = Node(val=value)
+                node = Node(data=value)
                 next_level.append(node)
                 return node
 
