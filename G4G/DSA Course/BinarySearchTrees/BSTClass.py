@@ -78,119 +78,90 @@ class BST:
             print(line)
 
     # Function to search a node in BST.
-    def search(self, root, value) -> bool:
-        if root == None:
-            return False
-        if root.data == value:
-            return True
-        if root.data < value:
-            return self.search(root=root.right, value=value)
-        else:
-            return self.search(root=root.left, value=value)
+    def search(self, value) -> bool:
+        def get_search(root, value) -> bool:
+            if root == None:
+                return False
+            if root.data == value:
+                return True
+            if root.data < value:
+                return get_search(root=root.right, value=value)
+            else:
+                return get_search(root=root.left, value=value)
+
+        return get_search(root=self.root, value=value)
 
     # Function to insert a node in a BST.
-    def insert(self, data) -> Any | Node:
-        parent = None
-        root = self.root
-        curr = root
-        while curr:
-            parent = curr
-            if curr.data == data:
-                return root
-            elif curr.data < data:
-                curr = curr.right
+    def insert(self, data) -> Node:
+        def get_insert(root, value) -> Node:
+            if root is None:
+                return Node(data=value)
             else:
-                curr = curr.left
-        if not parent:
-            return Node(data=data)
-        assert parent
-        if parent.data > data:
-            parent.left = Node(data=data)
-        else:
-            parent.right = Node(data=data)
-        return root
+                if root.data == value:
+                    return root
+                elif root.data < value:
+                    root.right = get_insert(root=root.right, value=value)
+                else:
+                    root.left = get_insert(root=root.left, value=value)
+            return root
+
+        return get_insert(root=self.root, value=data)
 
     def build_tree(self, lst) -> Node | None:
         self.root = None
-        for key in lst:
-            self.root = self.insert(data=key)
+        for value in lst:
+            self.root = self.insert(data=value)
         return self.root
 
-    def InOrder(self, root) -> list[Any]:
-        arr = []
-        if root:
-            arr += self.InOrder(root=root.left)
-            arr.append(root.data)
-            arr += self.InOrder(root=root.right)
-        return arr
+    def delete_node(self, value) -> Node | None:
 
-    def deleteNode(self, value) -> Node | None:
-        root = self.root
-        parent = None
-        current = root
+        def get_suc(cur) -> Any:
+            while cur.left != None:
+                cur = cur.left
+            return cur.data
 
-        # Search for the node to delete
-        while current and current.data != value:
-            parent = current
-            if current.data > value:
-                current = current.left
+        def get_delete_node(root, value) -> Node | None:
+            if root == None:
+                return
+            if root.data > value:
+                root.left = get_delete_node(root=root.left, value=value)
+            if root.data < value:
+                root.right = get_delete_node(root=root.right, value=value)
             else:
-                current = current.right
-
-        # If node not found, return
-        if current is None:
+                if root.left == None:
+                    return root.right
+                elif root.right == None:
+                    return root.left
+                else:
+                    suc = get_suc(cur=root.right)
+                    root.data = suc
+                    root.right = get_delete_node(root=root.right, value=suc)
             return root
 
-        # Case 1: Node to be deleted has no children or only one child
-        if current.left is None:
-            if parent is None:
-                root = current.right
-            elif parent.left == current:
-                parent.left = current.right
-            else:
-                parent.right = current.right
+        self.root = get_delete_node(root=self.root, value=value)
+        return self.root
 
-        elif current.right is None:
-            if parent is None:
-                root = current.left
-            elif parent.left == current:
-                parent.left = current.left
-            else:
-                parent.right = current.left
+    def preorder(self) -> list[Any]:
+        def get_preorder(root) -> list[Any]:
+            arr = []
+            if root:
+                arr.append(root.data)
+                arr += get_preorder(root=root.left)
+                arr += get_preorder(root=root.right)
+            return arr
 
-        # Case 2: Node to be deleted has two children
-        else:
-            succ_parent = current
-            succ = current.right
+        return get_preorder(root=self.root)
 
-            while succ.left is not None:
-                succ_parent = succ
-                succ = succ.left
+    def inorder(self) -> list[Any]:
+        def get_inorder(root) -> list[Any]:
+            arr = []
+            if root != None:
+                arr += get_inorder(root=root.left)
+                arr.append(root.data)
+                arr += get_inorder(root=root.right)
+            return arr
 
-            if succ_parent != current:
-                succ_parent.left = succ.right
-            else:
-                succ_parent.right = succ.right
-
-            current.data = succ.data
-        self.root = root
-        return root
-
-    def preorder(self, root) -> list[Any]:
-        arr = []
-        if root:
-            arr.append(root.data)
-            arr += self.preorder(root=root.left)
-            arr += self.preorder(root=root.right)
-        return arr
-
-    def inorder(self, root) -> list[Any]:
-        arr = []
-        if root != None:
-            arr += self.inorder(root=root.left)
-            arr.append(root.data)
-            arr += self.inorder(root=root.right)
-        return arr
+        return get_inorder(root=self.root)
 
     def postorder(self) -> list[Any]:
         def get_postorder(root) -> list[Any]:
@@ -203,7 +174,7 @@ class BST:
 
         return get_postorder(root=self.root)
 
-    def levelOrder(self) -> list[Any]:
+    def levelorder(self) -> list[Any]:
         root = self.root
         if not root:
             return []
@@ -222,18 +193,18 @@ class BST:
     def min_value(self) -> Any:
         if self.root is None:
             return -1
-        current = self.root
-        while current.left is not None:
-            current = current.left
-        return current.data
+        cur = self.root
+        while cur.left is not None:
+            cur = cur.left
+        return cur.data
 
     def max_value(self) -> Any:
         if self.root is None:
             return -1
-        current = self.root
-        while current.right is not None:
-            current = current.right
-        return current.data
+        cur = self.root
+        while cur.right is not None:
+            cur = cur.right
+        return cur.data
 
     def floor(self, value) -> Any:
         root = self.root
@@ -268,16 +239,24 @@ class BST:
         return res
 
 
-bst1 = BST(arr=[71, 53, 11, 8, 13, 36, 10, 49, 1, 2])
-bst1.print_tree()
+if __name__ == "__main__":
+    bst1 = BST(arr=[71, 53, 11, 8, 13, 36, 10, 49, 1, 2])
+    bst1.print_tree()
 
-bst1.deleteNode(value=71)
-bst1.print_tree()
+    bst1.delete_node(value=71)
+    bst1.print_tree()
 
-print(bst1.min_value())
-bst1.deleteNode(value=53)
-print(bst1.max_value())
+    print(bst1.min_value())
+    bst1.delete_node(value=53)
+    print(bst1.max_value())
 
+    print(bst1.preorder())
+    print(bst1.inorder())
+    print(bst1.postorder())
+    print(bst1.levelorder())
 
-print(bst1.floor(value=12))
-print(bst1.ceil(value=12))
+    print(bst1.search(value=49))
+    print(bst1.search(value=53))
+
+    print(bst1.floor(value=12))
+    print(bst1.ceil(value=12))
