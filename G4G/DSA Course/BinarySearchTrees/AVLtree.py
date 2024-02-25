@@ -121,12 +121,13 @@ class AVLTree(object):
         return root
 
 
-Tree = AVLTree()
-root = None
-root = Tree.insert_node(root, 40)
-root = Tree.insert_node(root, 60)
-root = Tree.insert_node(root, 50)
-root = Tree.insert_node(root, 70)
+if __name__ == "__main__":
+    Tree = AVLTree()
+    root = None
+    root = Tree.insert_node(root, 40)
+    root = Tree.insert_node(root, 60)
+    root = Tree.insert_node(root, 50)
+    root = Tree.insert_node(root, 70)
 
-print("PREORDER")
-Tree.preOrder(root)
+    print("PREORDER")
+    Tree.preOrder(root)
