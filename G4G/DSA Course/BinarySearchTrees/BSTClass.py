@@ -80,7 +80,7 @@ class BST:
     # Function to search a node in BST.
     def search(self, value) -> bool:
         def get_search(root, value) -> bool:
-            if root == None:
+            if not root:
                 return False
             if root.data == value:
                 return True
@@ -94,7 +94,7 @@ class BST:
     # Function to insert a node in a BST.
     def insert(self, data) -> Node:
         def get_insert(root, value) -> Node:
-            if root is None:
+            if not root:
                 return Node(data=value)
             else:
                 if root.data == value:
@@ -116,21 +116,21 @@ class BST:
     def delete_node(self, value) -> Node | None:
 
         def get_suc(cur) -> Any:
-            while cur.left != None:
+            while cur.left:
                 cur = cur.left
             return cur.data
 
         def get_delete_node(root, value) -> Node | None:
-            if root == None:
+            if not root:
                 return
             if root.data > value:
                 root.left = get_delete_node(root=root.left, value=value)
             if root.data < value:
                 root.right = get_delete_node(root=root.right, value=value)
             else:
-                if root.left == None:
+                if not root.left:
                     return root.right
-                elif root.right == None:
+                elif not root.right:
                     return root.left
                 else:
                     suc = get_suc(cur=root.right)
@@ -155,7 +155,7 @@ class BST:
     def inorder(self) -> list[Any]:
         def get_inorder(root) -> list[Any]:
             arr = []
-            if root != None:
+            if root:
                 arr += get_inorder(root=root.left)
                 arr.append(root.data)
                 arr += get_inorder(root=root.right)
@@ -166,7 +166,7 @@ class BST:
     def postorder(self) -> list[Any]:
         def get_postorder(root) -> list[Any]:
             arr = []
-            if root != None:
+            if root:
                 arr += get_postorder(root=root.left)
                 arr += get_postorder(root=root.right)
                 arr.append(root.data)
@@ -184,25 +184,25 @@ class BST:
         while queue != []:
             node = queue.pop(0)
             arr.append(node.data)
-            if node.left != None:
+            if node.left:
                 queue.append(node.left)
-            if node.right != None:
+            if node.right:
                 queue.append(node.right)
         return arr
 
     def min_value(self) -> Any:
-        if self.root is None:
+        if not self.root:
             return -1
         cur = self.root
-        while cur.left is not None:
+        while cur.left:
             cur = cur.left
         return cur.data
 
     def max_value(self) -> Any:
-        if self.root is None:
+        if not self.root:
             return -1
         cur = self.root
-        while cur.right is not None:
+        while cur.right:
             cur = cur.right
         return cur.data
 
