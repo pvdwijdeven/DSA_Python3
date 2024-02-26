@@ -1,0 +1,116 @@
+from typing import Any
+
+
+class Node:
+    def __init__(self, data, left=None, right=None) -> None:
+        self.data = data
+        self.left = left
+        self.right = right
+
+
+def print_tree(arr, val="data", left="left", right="right") -> None:
+    def build_tree(arr) -> Node | None:
+        # funtion to build tree from an array, where "N" represents empty node
+        def grab(it, next_level) -> Node | None:
+            value = next(it, "N")
+            if value != "N":
+                node = Node(data=value)
+                next_level.append(node)
+                return node
+
+        # Create the root of the tree
+        it = iter(arr)
+        next_level = []
+        root = grab(it=it, next_level=next_level)
+
+        while next_level:
+            level = next_level
+            next_level = []
+            for node in level:
+                node.left = grab(it=it, next_level=next_level)
+                node.right = grab(it=it, next_level=next_level)
+
+        return root
+
+    # function to print tree in a grahical way
+    def display(root, val=val, left=left, right=right) -> Any:
+        # Returns list of strings, width, height, and horizontal coordinate of the root.
+        # No child.
+        if getattr(root, right) is None and getattr(root, left) is None:
+            line = "%s" % getattr(root, val)
+            width = len(line)
+            height = 1
+            middle = width // 2
+            return [line], width, height, middle
+
+        # Only left child.
+        if getattr(root, right) is None:
+            lines, n, p, x = display(getattr(root, left))
+            s = "%s" % getattr(root, val)
+            u = len(s)
+            first_line = (x + 1) * " " + (n - x - 1) * "_" + s
+            second_line = x * " " + "/" + (n - x - 1 + u) * " "
+            shifted_lines = [line + u * " " for line in lines]
+            return (
+                [first_line, second_line] + shifted_lines,
+                n + u,
+                p + 2,
+                n + u // 2,
+            )
+
+        # Only right child.
+        if getattr(root, left) is None:
+            lines, n, p, x = display(root=getattr(root, right))
+            s = "%s" % getattr(root, val)
+            u = len(s)
+            first_line = s + x * "_" + (n - x) * " "
+            second_line = (u + x) * " " + "\\" + (n - x - 1) * " "
+            shifted_lines = [u * " " + line for line in lines]
+            return [first_line, second_line] + shifted_lines, n + u, p + 2, u // 2
+
+        # Two children.
+        left, n, p, x = display(root=getattr(root, left))
+        right, m, q, y = display(root=getattr(root, right))
+        s = "%s" % getattr(root, val)
+        u = len(s)
+        first_line = (x + 1) * " " + (n - x - 1) * "_" + s + y * "_" + (m - y) * " "
+        second_line = (
+            x * " " + "/" + (n - x - 1 + u + y) * " " + "\\" + (m - y - 1) * " "
+        )
+        if p < q:
+            left += [n * " "] * (q - p)
+        elif q < p:
+            right += [m * " "] * (p - q)
+        zipped_lines = zip(left, right, strict=True)
+        lines = [first_line, second_line] + [a + u * " " + b for a, b in zipped_lines]
+        return lines, n + m + u, max(p, q) + 2, n + u // 2
+
+    root = build_tree(arr)
+    lines, *_ = display(root=root, val=val, left=left, right=right)
+    for line in lines:
+        print(line)
+
+
+class Heap:
+    def __init__(self, arr=[]) -> None:
+        self.arr = arr
+
+    def get_parent(self, i) -> int:
+        return (i - 1) // 2
+
+    def get_left_child(self, i) -> int:
+        return i * 2 + 1
+
+    def get_right_child(self, i) -> int:
+        return i * 2 + 2
+
+    def print_tree(self) -> None:
+        print_tree(arr=self.arr)
+
+
+if __name__ == "__main__":
+    hp1 = Heap(arr=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+    hp1.print_tree()
+    print(hp1.get_parent(i=13))
+    print(hp1.get_left_child(i=5))
+    print(hp1.get_right_child(i=7))

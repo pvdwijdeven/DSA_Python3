@@ -128,13 +128,14 @@ class CircularDoubleLinkedList:
         return res
 
 
-L1 = CircularDoubleLinkedList(arr="1<->2<->3<->4<->5")
-L1.print_list()
-L2 = CircularDoubleLinkedList(arr=[1, 2, 3, 4, 5])
-CircularDoubleLinkedList.compare_CLL(CLL1=L1, CLL2=L2)
-L2 = CircularDoubleLinkedList(arr=[1, 2, 3, 5])
-CircularDoubleLinkedList.compare_CLL(CLL1=L1, CLL2=L2)
-CircularDoubleLinkedList.is_circular(root=L1)
-if L1.head:
-    L1.head.prev = None
+if __name__ == "__main__":
+    L1 = CircularDoubleLinkedList(arr="1<->2<->3<->4<->5")
+    L1.print_list()
+    L2 = CircularDoubleLinkedList(arr=[1, 2, 3, 4, 5])
+    CircularDoubleLinkedList.compare_CLL(CLL1=L1, CLL2=L2)
+    L2 = CircularDoubleLinkedList(arr=[1, 2, 3, 5])
+    CircularDoubleLinkedList.compare_CLL(CLL1=L1, CLL2=L2)
     CircularDoubleLinkedList.is_circular(root=L1)
+    if L1.head:
+        L1.head.prev = None
+        CircularDoubleLinkedList.is_circular(root=L1)

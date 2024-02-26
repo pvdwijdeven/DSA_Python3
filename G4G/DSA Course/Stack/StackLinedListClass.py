@@ -8,7 +8,7 @@ class Node:
 
     @property
     def var_next(self) -> Any:
-        assert self.next is not None
+        assert self.next
         return self.next
 
 
@@ -50,7 +50,7 @@ class Stack:
     def push(self, value) -> None:
         temp = Node(data=value)
         temp.next = self.head.next
-        assert self.head != None
+        assert self.head
         self.head.next = temp
         self.size += 1
 
