@@ -1,3 +1,4 @@
+from math import inf
 from typing import Any
 
 
@@ -92,25 +93,108 @@ def print_tree(arr, val="data", left="left", right="right") -> None:
 
 
 class Heap:
-    def __init__(self, arr=[]) -> None:
+    def __init__(self, arr=[], min_heap=None) -> None:
         self.arr = arr
+        if len(arr) <= 1:
+            if not min_heap:
+                self.min_heap = True
+            else:
+                self.min_heap = min_heap
+        else:
+            self.min_heap = arr[0] < arr[1]
 
-    def get_parent(self, i) -> int:
-        return (i - 1) // 2
+    def get_parent(self, pos) -> int:
+        return (pos - 1) // 2
 
-    def get_left_child(self, i) -> int:
-        return i * 2 + 1
+    def get_left_child(self, pos) -> int:
+        return pos * 2 + 1
 
-    def get_right_child(self, i) -> int:
-        return i * 2 + 2
+    def get_right_child(self, pos) -> int:
+        return pos * 2 + 2
 
     def print_tree(self) -> None:
         print_tree(arr=self.arr)
 
+    def insert(self, value) -> None:
+        arr = self.arr
+        arr.append(value)
+        i = len(arr) - 1
+
+        if self.min_heap:
+            while i > 0 and arr[i] < arr[self.get_parent(pos=i)]:
+                p = self.get_parent(pos=i)
+                arr[i], arr[p] = arr[p], arr[i]
+                i = p
+            return
+        else:
+            while i > 0 and arr[i] > arr[self.get_parent(pos=i)]:
+                p = self.get_parent(pos=i)
+                arr[i], arr[p] = arr[p], arr[i]
+                i = p
+            return
+
+    def min_heapify(self, pos) -> None:
+        arr = self.arr
+        lt = self.get_left_child(pos=pos)
+        rt = self.get_right_child(pos=pos)
+        smallest = pos
+        n = len(arr)
+        if lt < n and arr[lt] < arr[smallest]:
+            smallest = lt
+        if rt < n and arr[rt] < arr[smallest]:
+            smallest = rt
+        if smallest != pos:
+            arr[smallest], arr[pos] = arr[pos], arr[smallest]
+            self.min_heapify(pos=smallest)
+
+    def extract_min(self) -> Any:
+        arr = self.arr
+        n = len(arr)
+        if n == 0:
+            return inf
+        res = arr[0]
+        arr[0] = arr[n - 1]
+        arr.pop()
+        self.min_heapify(pos=0)
+        return res
+
+    def max_heapify(self, pos) -> None:
+        arr = self.arr
+        lt = self.get_left_child(pos=pos)
+        rt = self.get_right_child(pos=pos)
+        largest = pos
+        n = len(arr)
+        if lt < n and arr[lt] > arr[largest]:
+            largest = lt
+        if rt < n and arr[rt] > arr[largest]:
+            largest = rt
+        if largest != pos:
+            arr[largest], arr[pos] = arr[pos], arr[largest]
+            self.max_heapify(pos=largest)
+
+    def extract_max(self) -> Any:
+        arr = self.arr
+        n = len(arr)
+        if n == 0:
+            return -inf
+        res = arr[0]
+        arr[0] = arr[n - 1]
+        arr.pop()
+        self.max_heapify(pos=0)
+        return res
+
 
 if __name__ == "__main__":
-    hp1 = Heap(arr=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-    hp1.print_tree()
-    print(hp1.get_parent(i=13))
-    print(hp1.get_left_child(i=5))
-    print(hp1.get_right_child(i=7))
+    hp_min = Heap(arr=[10, 20, 15, 40, 50, 100, 25, 45])
+    hp_min.print_tree()
+    hp_min.insert(value=12)
+    hp_min.print_tree()
+    hp_min.extract_min()
+    hp_min.print_tree()
+
+    hp_max = Heap(arr=[100, 50, 25, 45, 40, 25, 20, 10])
+    hp_max.print_tree()
+    hp_max.insert(value=75)
+    hp_max.print_tree()
+    hp_max.extract_max()
+    hp_max.print_tree()
