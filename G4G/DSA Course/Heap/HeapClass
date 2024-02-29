@@ -86,7 +86,7 @@ def print_tree(arr, val="data", left="left", right="right") -> None:
         lines = [first_line, second_line] + [a + u * " " + b for a, b in zipped_lines]
         return lines, n + m + u, max(p, q) + 2, n + u // 2
 
-    root = build_tree(arr)
+    root = build_tree(arr=arr)
     lines, *_ = display(root=root, val=val, left=left, right=right)
     for line in lines:
         print(line)
@@ -94,7 +94,8 @@ def print_tree(arr, val="data", left="left", right="right") -> None:
 
 class MinHeap:
     def __init__(self, arr=[]) -> None:
-        self.arr = arr
+        self.heap = arr
+        self.build_heap()
 
     def get_parent(self, pos) -> int:
         return (pos - 1) // 2
@@ -106,65 +107,79 @@ class MinHeap:
         return pos * 2 + 2
 
     def print_tree(self) -> None:
-        print_tree(arr=self.arr)
+        print_tree(arr=self.heap)
+
+    def build_heap(self) -> None:
+        heap = self.heap
+        n = len(heap)
+        for i in range((n - 2) // 2, -1, -1):
+            self.heapify(pos=i, len_heap=n)
+
+    def heap_sort(self) -> None:
+        self.build_heap()
+        heap = self.heap
+        n = len(heap)
+        for i in range(n - 1, -1, -1):
+            heap[i], heap[0] = heap[0], heap[i]
+            self.heapify(pos=0, len_heap=i)
+        return self.heap
 
     def insert(self, value) -> None:
-        arr = self.arr
-        arr.append(value)
-        i = len(arr) - 1
-        while i > 0 and arr[i] < arr[self.get_parent(pos=i)]:
+        heap = self.heap
+        heap.append(value)
+        i = len(heap) - 1
+        while i > 0 and heap[i] < heap[self.get_parent(pos=i)]:
             p = self.get_parent(pos=i)
-            arr[i], arr[p] = arr[p], arr[i]
+            heap[i], heap[p] = heap[p], heap[i]
             i = p
         return
 
-    def heapify(self, pos) -> None:
-        arr = self.arr
+    def heapify(self, pos, len_heap) -> None:
+        heap = self.heap
         lt = self.get_left_child(pos=pos)
         rt = self.get_right_child(pos=pos)
         smallest = pos
-        n = len(arr)
-        if lt < n and arr[lt] < arr[smallest]:
+        if lt < len_heap and heap[lt] < heap[smallest]:
             smallest = lt
-        if rt < n and arr[rt] < arr[smallest]:
+        if rt < len_heap and heap[rt] < heap[smallest]:
             smallest = rt
         if smallest != pos:
-            arr[smallest], arr[pos] = arr[pos], arr[smallest]
-            self.heapify(pos=smallest)
+            heap[smallest], heap[pos] = heap[pos], heap[smallest]
+            self.heapify(pos=smallest, len_heap=len_heap)
 
     def extract_min(self) -> Any:
-        arr = self.arr
-        n = len(arr)
-        if n == 0:
+        heap = self.heap
+        len_heap = len(heap)
+        if len_heap == 0:
             return inf
-        res = arr[0]
-        arr[0] = arr[n - 1]
-        arr.pop()
-        self.heapify(pos=0)
+        res = heap[0]
+        heap[0] = heap[len_heap - 1]
+        heap.pop()
+        self.heapify(pos=0, len_heap=len_heap)
         return res
 
     def decrease_key(self, pos, value) -> None:
-        arr = self.arr
-        arr[pos] = value
+        heap = self.heap
+        heap[pos] = value
         par = self.get_parent(pos=pos)
-        if par >= 0 and arr[par] > arr[pos]:
-            arr[par], arr[pos] = arr[pos], arr[par]
+        if par >= 0 and heap[par] > heap[pos]:
+            heap[par], heap[pos] = heap[pos], heap[par]
             self.decrease_key(pos=par, value=value)
         else:
             return
 
     def delete_key(self, pos) -> int:
-        arr = self.arr
-        res = arr[pos]
-        arr[pos] = arr[-1]
-        arr.pop()
-        self.heapify(pos=pos)
+        heap = self.heap
+        res = heap[pos]
+        heap[pos] = heap[-1]
+        heap.pop()
+        self.heapify(pos=pos, len_heap=len(heap))
         return res
 
 
 class MaxHeap:
-    def __init__(self, arr=[]) -> None:
-        self.arr = arr
+    def __init__(self, heap=[]) -> None:
+        self.heap = heap
 
     def get_parent(self, pos) -> int:
         return (pos - 1) // 2
@@ -176,65 +191,80 @@ class MaxHeap:
         return pos * 2 + 2
 
     def print_tree(self) -> None:
-        print_tree(arr=self.arr)
+        print_tree(arr=self.heap)
+
+    def build_heap(self) -> None:
+        heap = self.heap
+        n = len(heap)
+        for i in range((n - 2) // 2, -1, -1):
+            self.heapify(pos=i, len_heap=n)
+
+    def heap_sort(self) -> None:
+        self.build_heap()
+        heap = self.heap
+        n = len(heap)
+        for i in range(n - 1, -1, -1):
+            heap[i], heap[0] = heap[0], heap[i]
+            self.heapify(pos=0, len_heap=i)
+        return self.heap
 
     def insert(self, value) -> None:
-        arr = self.arr
-        arr.append(value)
-        i = len(arr) - 1
-        while i > 0 and arr[i] > arr[self.get_parent(pos=i)]:
+        heap = self.heap
+        heap.append(value)
+        i = len(heap) - 1
+        while i > 0 and heap[i] > heap[self.get_parent(pos=i)]:
             p = self.get_parent(pos=i)
-            arr[i], arr[p] = arr[p], arr[i]
+            heap[i], heap[p] = heap[p], heap[i]
             i = p
         return
 
-    def heapify(self, pos) -> None:
-        arr = self.arr
+    def heapify(self, pos, len_heap) -> None:
+        heap = self.heap
         lt = self.get_left_child(pos=pos)
         rt = self.get_right_child(pos=pos)
         largest = pos
-        n = len(arr)
-        if lt < n and arr[lt] > arr[largest]:
+        if lt < len_heap and heap[lt] > heap[largest]:
             largest = lt
-        if rt < n and arr[rt] > arr[largest]:
+        if rt < len_heap and heap[rt] > heap[largest]:
             largest = rt
         if largest != pos:
-            arr[largest], arr[pos] = arr[pos], arr[largest]
-            self.heapify(pos=largest)
+            heap[largest], heap[pos] = heap[pos], heap[largest]
+            self.heapify(pos=largest, len_heap=len_heap)
 
     def extract_max(self) -> Any:
-        arr = self.arr
-        n = len(arr)
-        if n == 0:
+        heap = self.heap
+        len_heap = len(heap)
+        if len_heap == 0:
             return -inf
-        res = arr[0]
-        arr[0] = arr[n - 1]
-        arr.pop()
-        self.heapify(pos=0)
+        res = heap[0]
+        heap[0] = heap[len_heap - 1]
+        heap.pop()
+        self.heapify(pos=0, len_heap=len_heap)
         return res
 
     def increase_key(self, pos, value) -> None:
-        arr = self.arr
-        arr[pos] = value
+        heap = self.heap
+        heap[pos] = value
         par = self.get_parent(pos=pos)
-        if par >= 0 and arr[par] < arr[pos]:
-            arr[par], arr[pos] = arr[pos], arr[par]
+        if par >= 0 and heap[par] < heap[pos]:
+            heap[par], heap[pos] = heap[pos], heap[par]
             self.increase_key(pos=par, value=value)
         else:
             return
 
     def delete_key(self, pos) -> int:
-        arr = self.arr
-        res = arr[pos]
-        arr[pos] = arr[-1]
-        arr.pop()
-        self.heapify(pos=pos)
+        heap = self.heap
+        res = heap[pos]
+        heap[pos] = heap[-1]
+        heap.pop()
+        self.heapify(pos=pos, len_heap=len(heap))
         return res
 
 
 if __name__ == "__main__":
-    hp_min = MinHeap(arr=[10, 20, 15, 40, 50, 100, 25, 45])
+    hp_min = MinHeap(arr=[100, 25, 10, 40, 50, 5, 20, 45])
     hp_min.print_tree()
+    print(hp_min.heap_sort())
     hp_min.insert(value=12)
     hp_min.print_tree()
     hp_min.extract_min()
@@ -243,9 +273,11 @@ if __name__ == "__main__":
     hp_min.print_tree()
     hp_min.delete_key(pos=2)
     hp_min.print_tree()
+    print(hp_min.heap_sort())
 
-    hp_max = MaxHeap(arr=[100, 50, 25, 45, 40, 15, 20, 10])
+    hp_max = MaxHeap(heap=[100, 50, 25, 45, 40, 15, 20, 10])
     hp_max.print_tree()
+    print(hp_max.heap_sort())
     hp_max.insert(value=75)
     hp_max.print_tree()
     hp_max.extract_max()
@@ -254,3 +286,4 @@ if __name__ == "__main__":
     hp_max.print_tree()
     hp_max.delete_key(pos=2)
     hp_max.print_tree()
+    print(hp_max.heap_sort())
