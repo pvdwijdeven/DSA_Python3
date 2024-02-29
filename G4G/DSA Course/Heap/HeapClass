@@ -46,7 +46,7 @@ def print_tree(arr, val="data", left="left", right="right") -> None:
 
         # Only left child.
         if getattr(root, right) is None:
-            lines, n, p, x = display(getattr(root, left))
+            lines, n, p, x = display(root=getattr(root, left))
             s = "%s" % getattr(root, val)
             u = len(s)
             first_line = (x + 1) * " " + (n - x - 1) * "_" + s

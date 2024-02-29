@@ -32,6 +32,7 @@ class LinkedList:
         # create linked list from array
         prev = Node(data=None)
         head = prev
+        cur = None
         for x in arr:
             cur = Node(data=x)
             prev.next = cur
@@ -51,6 +52,7 @@ class LinkedList:
             if not cur.next:
                 break
             cur = cur.next
+        assert self.tail
         print(self.head.data, self.tail.data)
         return array
 
@@ -140,6 +142,7 @@ class LinkedList:
 
     def delete_tail(self) -> Node | None:
         # Delete tail of linked list
+        prev = None
         cur = self.head
         if not cur or not cur.next:
             return None
@@ -148,6 +151,7 @@ class LinkedList:
                 break
             prev = cur
             cur = cur.next
+        assert prev
         prev.next = None
         self.tail = prev
         return self.head
@@ -189,6 +193,7 @@ class LinkedList:
         temp = Node(data=data)
         if not self.head:
             return temp
+        assert self.tail
         if self.head.data <= self.tail.data:
             if data < self.head.data:
                 temp.next = self.head

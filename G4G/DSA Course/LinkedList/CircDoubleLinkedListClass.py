@@ -52,12 +52,14 @@ class CircularDoubleLinkedList:
         prev_node = Node(data=None)
         prev_prev = None
         head = prev_node
+        cur = None
         for value in arr:
             cur = Node(data=value)
             prev_node.next = cur
             prev_node.prev = prev_prev
             prev_prev = prev_node
             prev_node = cur
+        assert cur
         cur.prev = prev_prev
         cur.next = head.next
         if head.next:

@@ -53,12 +53,14 @@ class DoubleLinkedList:
         prev_node = Node(data=None)
         prev_prev = None
         head = prev_node
+        cur = None
         for value in arr:
             cur = Node(data=value)
             prev_node.next = cur
             prev_node.prev = prev_prev
             prev_prev = prev_node
             prev_node = cur
+        assert cur
         cur.prev = prev_prev
         assert head.next
         head.next.prev = None
@@ -205,6 +207,8 @@ class DoubleLinkedList:
         return self.head
 
     def find_middle(self, show=True) -> Any | None:
+        cur = None
+        curl = None
         if self.head:
             curl = self.head
             cur = self.head.prev
