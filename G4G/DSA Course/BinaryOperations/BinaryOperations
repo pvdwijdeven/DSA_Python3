@@ -6,7 +6,7 @@ def pos_of_right_most_diff_bit(m, n) -> int:
     return get_right_most_set_bit(n=xor_diff)
 
 
-# Function to get the first bit from the right that is set
+# Function to get the position of the first bit from the right that is set
 def get_right_most_set_bit(n) -> int:
     if n == 0:
         return 0
@@ -15,6 +15,11 @@ def get_right_most_set_bit(n) -> int:
         bit += 1
         n = n >> 1
     return bit
+
+
+# Function to get the value of the first bit from the right that is set
+def get_right_most_set_bit_no(n) -> int:
+    return n & -(n - 1)
 
 
 # Function to retreive the kth bit of n
@@ -52,6 +57,7 @@ def count_set_bits_preprocess(n) -> int:
 
 
 # Function to return sum of count of set bits in the integers from 1 to n.
+# See https://www.geeksforgeeks.org/count-total-set-bits-in-all-numbers-from-1-to-n-set-2/
 def count_set_bits_1ton(n) -> int:
     total_setbit = 0
     i = 1
@@ -73,11 +79,76 @@ def count_bits_flip(a, b) -> int:
     return res
 
 
+# Function to find the max number of consecutive ones in bin number
+def max_consecutive_ones(N) -> int:
+    max_cons_bits = 0
+    set_bits = 0
+    while N:
+        if N & 1:
+            set_bits += 1
+        else:
+            set_bits = 0
+        max_cons_bits = max(max_cons_bits, set_bits)
+        N = N >> 1
+    return max_cons_bits
+
+
+# Function to find the only number in an array that occurs an odd number of time
+def find_only_odd(arr) -> int:
+    res = arr[0]
+    for element in arr[1:]:
+        res ^= element
+    return res
+
+
+# Function to find the only 2 numbers in an array that occurs an odd number of time
+def find_two_odds(arr) -> tuple[int, int]:
+    xor2 = arr[0]
+    set_bit_no = 0
+    size = len(arr)
+    n = size - 2
+    x, y = 0, 0
+    # Get the xor of all elements in arr[].
+    # The xor will basically be xor of two
+    # odd occurring elements
+    for i in range(1, size):
+        xor2 = xor2 ^ arr[i]
+    # Get one set bit in the xor2. We get
+    # rightmost set bit in the following
+    # line as it is easy to get
+    set_bit_no = xor2 & ~(xor2 - 1)
+    # Now divide elements in two sets:
+    # 1) The elements having the corresponding bit as 1.
+    # 2) The elements having the corresponding bit as 0.
+    for i in range(size):
+        # XOR of first set is finally going to
+        # hold one odd occurring number x
+        if arr[i] & set_bit_no:
+            x = x ^ arr[i]
+        # XOR of second set is finally going
+        # to hold the other odd occurring number y
+        else:
+            y = y ^ arr[i]
+    return x, y
+
+
+def is_power_of_two(n) -> bool:
+    if n:
+        if n & (n - 1) == 0:
+            return True
+    return False
+
+
 if __name__ == "__main__":
-    print(get_right_most_set_bit(n=17))
+    print(get_right_most_set_bit(n=16))
+    print(get_right_most_set_bit_no(n=16))
     print(pos_of_right_most_diff_bit(m=8, n=4))
     print(check_Kth_bit(n=5, k=1))
     print(count_set_bits(n=15))
     print(count_set_bits_preprocess(n=15))
     print(count_bits_flip(a=10, b=20))
     print(count_set_bits_1ton(n=17))
+    print(max_consecutive_ones(N=222))
+    print(find_only_odd([10, 40, 40, 20, 20, 30, 30, 40, 10, 10, 10]))
+    print(is_power_of_two(n=256))
+    print(find_two_odds([10, 10, 20, 30, 30, 40, 50, 50]))
