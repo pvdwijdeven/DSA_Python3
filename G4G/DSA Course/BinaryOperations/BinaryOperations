@@ -1,0 +1,83 @@
+# Function to find the first bit from the right that differs between m and n
+def pos_of_right_most_diff_bit(m, n) -> int:
+    if m == n:
+        return -1
+    xor_diff = m ^ n
+    return get_right_most_set_bit(n=xor_diff)
+
+
+# Function to get the first bit from the right that is set
+def get_right_most_set_bit(n) -> int:
+    if n == 0:
+        return 0
+    bit = 1
+    while not n & 1:
+        bit += 1
+        n = n >> 1
+    return bit
+
+
+# Function to retreive the kth bit of n
+def check_Kth_bit(n, k) -> int:
+    return n & (1 << (k - 1)) != 0
+
+
+# Function to return the count of set bits in n
+# Brian Kernighan's algorithm
+def count_set_bits(n) -> int:
+    res = 0
+    while n:
+        n = n & (n - 1)
+        res += 1
+    return res
+
+
+# Function to return the count
+# of set bits in n (32 bit)
+def count_set_bits_preprocess(n) -> int:
+    bit_set_table_256 = [0] * 256
+
+    def initialize() -> None:
+        bit_set_table_256[0] = 0
+        for i in range(256):
+            bit_set_table_256[i] = (i & 1) + bit_set_table_256[i // 2]
+
+    initialize()
+    return (
+        bit_set_table_256[n & 0xFF]
+        + bit_set_table_256[(n >> 8) & 0xFF]
+        + bit_set_table_256[(n >> 16) & 0xFF]
+        + bit_set_table_256[n >> 24]
+    )
+
+
+# Function to return sum of count of set bits in the integers from 1 to n.
+def count_set_bits_1ton(n) -> int:
+    total_setbit = 0
+    i = 1
+    while i <= n:
+        total_setbit += ((n + 1) // (2 * i)) * i
+        if (n + 1) % (2 * i) > i:
+            total_setbit += ((n + 1) % (2 * i)) - i
+        i <<= 1
+    return total_setbit
+
+
+# Function to find number of bits needed to be flipped to convert A to B
+def count_bits_flip(a, b) -> int:
+    n = a ^ b
+    res = 0
+    while n:
+        n = n & (n - 1)
+        res += 1
+    return res
+
+
+if __name__ == "__main__":
+    print(get_right_most_set_bit(n=17))
+    print(pos_of_right_most_diff_bit(m=8, n=4))
+    print(check_Kth_bit(n=5, k=1))
+    print(count_set_bits(n=15))
+    print(count_set_bits_preprocess(n=15))
+    print(count_bits_flip(a=10, b=20))
+    print(count_set_bits_1ton(n=17))
