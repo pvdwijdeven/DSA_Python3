@@ -80,16 +80,16 @@ def count_bits_flip(a, b) -> int:
 
 
 # Function to find the max number of consecutive ones in bin number
-def max_consecutive_ones(N) -> int:
+def max_consecutive_ones(n) -> int:
     max_cons_bits = 0
     set_bits = 0
-    while N:
-        if N & 1:
+    while n:
+        if n & 1:
             set_bits += 1
         else:
             set_bits = 0
         max_cons_bits = max(max_cons_bits, set_bits)
-        N = N >> 1
+        n = n >> 1
     return max_cons_bits
 
 
@@ -139,6 +139,77 @@ def is_power_of_two(n) -> bool:
     return False
 
 
+# Power Set: Power set P(S) of a set S is the set of all subsets of S.
+# For example S = {a, b, c} then P(s) = {{}, {a}, {b}, {c}, {a,b}, {a, c}, {b, c}, {a, b, c}}.
+# The following function gives the power set of a string
+def get_power_set(inp_str: str) -> list[str]:
+    str_len = len(inp_str)
+    res = []
+    bit_size = 1 << str_len
+    for i in range(bit_size):
+        sub_str = ""
+        for j in range(str_len):
+            if (i & (1 << j)) != 0:
+                sub_str += inp_str[j]
+        res.append(sub_str)
+    return res
+
+
+def swap_bits(n) -> int:
+    ev = n & 0xAAAAAAAA
+    od = n & 0x55555555
+    ev >>= 1
+    od <<= 1
+    return ev | od
+
+
+# Function for finding maximum AND value pair
+def max_AND(arr) -> int:
+    def check_bit(pattern, arr, arr_len) -> int:
+        count = 0
+        for i in range(0, arr_len):
+            if (pattern & arr[i]) == pattern:
+                count = count + 1
+        return count
+
+    arr_len = len(arr)
+    res = 0
+    for bit in range(31, -1, -1):
+        count = check_bit(pattern=res | (1 << bit), arr=arr, arr_len=arr_len)
+        if count >= 2:
+            res = res | (1 << bit)
+    return res
+
+
+# This function shows if a number is sparse,
+# meaning that is has no consecutive set bits
+def isSparse(n) -> bool:
+    set_bits = 0
+    while n:
+        if n & 1:
+            set_bits += 1
+            print(set_bits)
+        else:
+            set_bits = 0
+        if set_bits >= 2:
+            return False
+        n >>= 1
+    return True
+
+
+# This function converts from binary to grey code
+def binary_to_grey(n) -> int:
+    return n ^ (n >> 1)
+
+
+def grey_to_binary(n) -> int:
+    res = n
+    while n > 0:
+        n >>= 1
+        res ^= n
+    return res
+
+
 if __name__ == "__main__":
     print(get_right_most_set_bit(n=16))
     print(get_right_most_set_bit_no(n=16))
@@ -148,7 +219,12 @@ if __name__ == "__main__":
     print(count_set_bits_preprocess(n=15))
     print(count_bits_flip(a=10, b=20))
     print(count_set_bits_1ton(n=17))
-    print(max_consecutive_ones(N=222))
-    print(find_only_odd([10, 40, 40, 20, 20, 30, 30, 40, 10, 10, 10]))
+    print(max_consecutive_ones(n=222))
+    print(find_only_odd(arr=[10, 40, 40, 20, 20, 30, 30, 40, 10, 10, 10]))
     print(is_power_of_two(n=256))
-    print(find_two_odds([10, 10, 20, 30, 30, 40, 50, 50]))
+    print(find_two_odds(arr=[10, 10, 20, 30, 30, 40, 50, 50]))
+    print(get_power_set(inp_str="abc"))
+    print(swap_bits(n=23))
+    print(max_AND(arr=[4, 8, 16, 12]))
+    print(binary_to_grey(n=10))
+    print(grey_to_binary(n=15))
