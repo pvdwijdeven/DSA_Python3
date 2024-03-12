@@ -1,3 +1,5 @@
+# Function to rearrange an array so that arr[i]
+# becomes arr[arr[i]] with O(1) extra space
 def rearrange(arr) -> list[int]:
     arr = arr[:]
     n = len(arr)
