@@ -1,18 +1,10 @@
-def rearrange(arr) -> list[int]:
-    arr = arr[:]
-    n = len(arr)
-    for i in range(0, n):
-        arr[i] += (arr[arr[i]] % n) * n
-    for i in range(0, n):
-        arr[i] = arr[i] // n
-    return arr
+def function(n):
+    if n == 0 or n == 1:
+        return n
+    if n % 3 != 0:
+        return 0
+    return function(n=n // 3)
 
 
-if __name__ == "__main__":
-    arr1 = [0, 1]
-    arr2 = [4, 0, 2, 1, 3]
-    arr3 = [1, 4, 7, 6, 2, 0, 3, 5]
-    print(rearrange(arr=arr1))
-    print(rearrange(arr=arr2))
-    print(rearrange(arr=arr3))
-    print(arr3)
+for i in range(30):
+    print(i, function(i))
