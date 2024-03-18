@@ -2,17 +2,17 @@ from typing import Any
 
 
 class Node:
-    def __init__(self, data) -> None:
-      self.data: int | float = data
-      self.left: Node | None = None
-      self.right: Node | None = None
+    def __init__(self, val) -> None:
+        self.data: int | float = val
+        self.left: Node | None = None
+        self.right: Node | None = None
 
 
 class BT:
     def __init__(self, arr=None) -> None:
         # create empty root
         if not arr:
-            self.root = Node(data=None)
+            self.root = Node(val=None)
         else:
             self.build_tree(lst=arr)
 
@@ -25,7 +25,7 @@ class BT:
         def grab(it, next_level) -> Node | None:
             value = next(it, "N")
             if value != "N":
-                node = Node(data=value)
+                node = Node(val=value)
                 next_level.append(node)
                 return node
 
