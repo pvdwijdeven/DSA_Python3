@@ -1,8 +1,8 @@
 class Node:
-    def __init__(self, val):
-        self.data = val
-        self.left = None
-        self.right = None
+  def __init__(self, val):
+      self.data = val
+      self.left = None
+      self.right = None
 
 
 # Function to return a list containing the preorder traversal of the tree.
