@@ -5,15 +5,18 @@ class Node:
         self.right: Node | None = None
 
 
-def height(root):
-    # code here
-    return 0 if root is None else max(height(root.left) + 1, height(root.right) + 1)
+def height(root) -> int:
+    return (
+        0
+        if root is None
+        else max(height(root=root.left) + 1, height(root=root.right) + 1)
+    )
 
 
 if __name__ == "__main__":
-    root = Node(1)
-    root.left = Node(4)  # type: ignore
-    root.left.left = Node(4)  # type: ignore
-    root.left.right = Node(2)  # type: ignore
+    root = Node(val=1)
+    root.left = Node(val=4)
+    root.left.left = Node(val=4)
+    root.left.right = Node(val=2)
 
-    print(height(root))
+    print(height(root=root))

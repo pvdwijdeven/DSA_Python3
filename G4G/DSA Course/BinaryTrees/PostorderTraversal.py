@@ -6,20 +6,19 @@ class Node:
 
 
 # Function to return a list containing the preorder traversal of the tree.
-def postOrder(root):
-    # code here
+def pos_order_traversal(root) -> list[int]:
     arr = []
     if root:
-        arr += postOrder(root.left)
-        arr += postOrder(root.right)
+        arr += pos_order_traversal(root=root.left)
+        arr += pos_order_traversal(root=root.right)
         arr.append(root.data)
     return arr
 
 
 if __name__ == "__main__":
-    root = Node(1)
-    root.left = Node(4)  # type: ignore
-    root.left.left = Node(4)  # type: ignore
-    root.left.right = Node(2)  # type: ignore
+    root = Node(val=1)
+    root.left = Node(val=4)
+    root.left.left = Node(val=4)
+    root.left.right = Node(val=2)
 
-    print(postOrder(root))
+    print(pos_order_traversal(root=root))

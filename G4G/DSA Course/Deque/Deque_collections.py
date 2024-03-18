@@ -1,13 +1,12 @@
 from collections import deque
 
-def eraseAt(deq, x):
-    # code here
+
+def erase_at(deq, x) -> None:
     del deq[x]
 
 
 # Function to erase the elements in range start (inclusive), end (exclusive).
-def eraseInRange(deq, s, e):
-    # code here
+def erase_in_range(deq, s, e) -> None:
     size = e - s
     while size != 0:
         del deq[s]

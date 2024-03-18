@@ -6,15 +6,13 @@ class Node:
 
 
 # Function to return a list containing the preorder traversal of the tree.
-def isIdentical(root1, root2):
-    # code here
+def is_identical(root1, root2) -> bool:
     res = True
-
     if root1 and root2:
         if root1.data != root2.data:
             return False
-        res = isIdentical(root1.left, root2.left)
-        res = res and isIdentical(root1.right, root2.right)
+        res = is_identical(root1=root1.left, root2=root2.left)
+        res = res and is_identical(root1=root1.right, root2=root2.right)
     else:
         if root1 != root2:
             return False
@@ -22,14 +20,14 @@ def isIdentical(root1, root2):
 
 
 if __name__ == "__main__":
-    root1 = Node(1)
-    root1.left = Node(4)  # type: ignore
-    root1.left.left = Node(4)  # type: ignore
-    root1.left.right = Node(2)  # type: ignore
+    root1 = Node(val=1)
+    root1.left = Node(val=4)
+    root1.left.left = Node(val=4)
+    root1.left.right = Node(val=2)
 
-    root2 = Node(1)
-    root2.left = Node(4)  # type: ignore
-    root2.left.left = Node(4)  # type: ignore
-    root2.left.right = Node(2)  # type: ignore
+    root2 = Node(val=1)
+    root2.left = Node(val=4)
+    root2.left.left = Node(val=4)
+    root2.left.right = Node(val=2)
 
-    print(isIdentical(root1, root2))
+    print(is_identical(root1=root1, root2=root2))

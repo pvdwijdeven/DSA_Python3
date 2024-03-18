@@ -6,17 +6,17 @@ class Node:
         self.right: Node | None = None
 
 
-def isBalanced(root) -> bool:
+def is_balanced(root) -> bool:
 
-    def Height(root) -> int:
+    def height(root) -> int:
         if not root:
             return 0
-        leftheight, rightheight = Height(root=root.left), Height(root=root.right)
-        if leftheight < 0 or rightheight < 0 or abs(leftheight - rightheight) > 1:
+        height_left, height_right = height(root=root.left), height(root=root.right)
+        if height_left < 0 or height_right < 0 or abs(height_left - height_right) > 1:
             return -1
-        return max(leftheight, rightheight) + 1
+        return max(height_left, height_right) + 1
 
-    return Height(root=root) >= 0
+    return height(root=root) >= 0
 
 
 if __name__ == "__main__":
@@ -25,4 +25,4 @@ if __name__ == "__main__":
     root.left = Node(val=4)
     root.left.left = Node(val=4)
     root.left.right = Node(val=2)
-    print(isBalanced(root=root))
+    print(is_balanced(root=root))

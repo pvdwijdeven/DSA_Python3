@@ -6,8 +6,7 @@ class Node:
 
 
 # Function to return a list containing the preorder traversal of the tree.
-def levelOrder(root):
-    # code here
+def level_order_traversal(root) -> list[int]:
     if not root:
         return []
     arr = []
@@ -24,9 +23,9 @@ def levelOrder(root):
 
 
 if __name__ == "__main__":
-    root = Node(1)
-    root.left = Node(4)  # type: ignore
-    root.left.left = Node(4)  # type: ignore
-    root.left.right = Node(2)  # type: ignore
+    root = Node(val=1)
+    root.left = Node(val=4)
+    root.left.left = Node(val=4)
+    root.left.right = Node(val=2)
 
-    print(levelOrder(root))
+    print(level_order_traversal(root=root))

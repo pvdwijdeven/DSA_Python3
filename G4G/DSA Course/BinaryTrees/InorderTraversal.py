@@ -6,20 +6,19 @@ class Node:
 
 
 # Function to return a list containing the preorder traversal of the tree.
-def InOrder(root):
-    # code here
+def in_order_traversal(root) -> list[int]:
     arr = []
     if root:
-        arr += InOrder(root.left)
+        arr += in_order_traversal(root=root.left)
         arr.append(root.data)
-        arr += InOrder(root.right)
+        arr += in_order_traversal(root=root.right)
     return arr
 
 
 if __name__ == "__main__":
-    root = Node(1)
-    root.left = Node(4)  # type: ignore
-    root.left.left = Node(4)  # type: ignore
-    root.left.right = Node(2)  # type: ignore
+    root = Node(val=1)
+    root.left = Node(val=4)
+    root.left.left = Node(val=4)
+    root.left.right = Node(val=2)
 
-    print(InOrder(root))
+    print(in_order_traversal(root=root))
