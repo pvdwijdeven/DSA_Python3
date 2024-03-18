@@ -1,45 +1,43 @@
-def getByIndex(arr,n,idx):
-    # return required ans
-    if idx > n-1: 
+def get_by_index(arr, n, idx) -> int:
+    if idx > n - 1:
         return -1
     return arr[idx]
 
-def insertAtEnd(arr,sizeOfArray,element):
-    ##Your code here
+
+def insert_at_end(arr, element) -> list[int]:
     arr.append(element)
     return arr
 
-def insertAtIndex(arr, sizeOfArray, index, element):
-    #Your code here
-    arr.insert(index,element)
+
+def insert_at_index(arr, index, element) -> list[int]:
+    arr.insert(index, element)
     return arr
 
-def updateArray(arr,n,idx,element):
-    #code here
+
+def update_array(arr, idx, element) -> None:
     arr[idx] = element
-    
-    
-def deleteFromArray(arr,n,idx):
-    #code here
+
+
+def delete_from_array(arr, idx) -> list[int]:
     del arr[idx]
     arr.append(0)
     return arr
 
 
-def median(A,N):
-    ##Your code here
+def median(A, N) -> int:
     A.sort()
     if N % 2 == 0:
-        return (A[(N//2) - 1] + A[(N//2)])//2
+        return (A[(N // 2) - 1] + A[(N // 2)]) // 2
     else:
-        return A[((N-1)//2)]
-    
-    #If median is fraction then convert the median to integer and return
-    
-#Function to find mean of the array elements.   
-def mean(A,N):
-    ##Your code here
-    return sum(A)//N
+        return A[((N - 1) // 2)]
+    # If median is fraction then convert the median to integer and return
 
-print(mean([1,1,1,1,1,1],6))
-print(median([1,1,1,1,1,1],6))
+
+# Function to find mean of the array elements.
+def mean(A, N) -> int:
+    return sum(A) // N
+
+
+if __name__ == "__main__":
+    print(mean(A=[1, 1, 1, 1, 1, 1], N=6))
+    print(median(A=[1, 1, 1, 1, 1, 1], N=6))

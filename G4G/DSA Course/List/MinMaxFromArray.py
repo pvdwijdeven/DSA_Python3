@@ -1,5 +1,4 @@
-def maximumElement(arr,n):
-    #return required result
+def max_element(arr) -> int:
     ans = 0
     for x in arr:
         if x > ans:
@@ -7,17 +6,16 @@ def maximumElement(arr,n):
     return ans
 
 
-
-def minimumElement(arr,n):
-    #return required result
-    
-    ans = 10**7
+def min_element(arr) -> int:
+    ans = 10**9
     for x in arr:
         if x < ans:
             ans = x
     return ans
-    
-print(maximumElement([5,4,2,1],4))
-print(maximumElement([8],1))
-print(minimumElement([5,4,2,1],4))
-print(minimumElement([8],1))
+
+
+if __name__ == "__main__":
+    print(max_element(arr=[5, 4, 2, 1]))
+    print(max_element(arr=[8]))
+    print(min_element(arr=[5, 4, 2, 1]))
+    print(min_element(arr=[8]))
