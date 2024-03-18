@@ -15,10 +15,11 @@ def InOrder(root):
         arr += InOrder(root.right)
     return arr
 
-
-root = Node(1)
-root.left = Node(4)  # type: ignore
-root.left.left = Node(4)  # type: ignore
-root.left.right = Node(2)  # type: ignore
-
-print(InOrder(root))
+if __name__ == "__main__":
+    root = Node(1)
+    root.left = Node(4)  # type: ignore
+    root.left.left = Node(4)  # type: ignore
+    root.left.right = Node(2)  # type: ignore
+    
+    print(InOrder(root))
+    

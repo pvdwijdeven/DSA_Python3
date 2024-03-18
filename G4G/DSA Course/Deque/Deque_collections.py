@@ -1,36 +1,5 @@
 from collections import deque
 
-d = deque([3, 4, 5], maxlen=10)
-print(d)
-print(list(d))
-d.append(6)
-print(list(d))
-d.appendleft(2)
-print(list(d))
-d.pop()
-print(list(d))
-d.popleft()
-print(list(d))
-d.extend([6, 7, 8, 9, 10])
-print(list(d))
-d.extendleft([2, 1, 0])  # 10 is removed because of maxlen
-print(list(d))
-d.clear()
-print(list(d))
-d.extend([1, 2, 3, 4, 5, 6, 7])
-d.insert(5, 99)
-d.insert(1, 99)
-print(list(d))
-print(d.index(99, 3, 8))
-print(d.count(99))
-d.remove(99)
-print(list(d))
-d.reverse()
-print(list(d))
-d.rotate(3)
-print(list(d))
-
-
 def eraseAt(deq, x):
     # code here
     del deq[x]
@@ -43,3 +12,35 @@ def eraseInRange(deq, s, e):
     while size != 0:
         del deq[s]
         size -= 1
+
+
+if __name__ == "__main__":
+    d = deque([3, 4, 5], maxlen=10)
+    print(d)
+    print(list(d))
+    d.append(6)
+    print(list(d))
+    d.appendleft(2)
+    print(list(d))
+    d.pop()
+    print(list(d))
+    d.popleft()
+    print(list(d))
+    d.extend([6, 7, 8, 9, 10])
+    print(list(d))
+    d.extendleft([2, 1, 0])  # 10 is removed because of maxlen
+    print(list(d))
+    d.clear()
+    print(list(d))
+    d.extend([1, 2, 3, 4, 5, 6, 7])
+    d.insert(5, 99)
+    d.insert(1, 99)
+    print(list(d))
+    print(d.index(99, 3, 8))
+    print(d.count(99))
+    d.remove(99)
+    print(list(d))
+    d.reverse()
+    print(list(d))
+    d.rotate(3)
+    print(list(d))
