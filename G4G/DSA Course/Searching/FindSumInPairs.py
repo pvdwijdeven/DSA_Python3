@@ -1,11 +1,11 @@
 # Find if sum is in 1 or more pais: two Pointers Approach
-def sum_in_pair(arr, x) -> list[int]:
+def sum_in_pair(arr, x) -> list[tuple[int, int]]:
   res = []
   i = 0
   j = len(arr) - 1
   while i < j:
     if arr[i] + arr[j] == x:
-      res.append((i, j))
+      res.append((arr[i], arr[j]))
       j -= 1
     elif arr[i] + arr[j] < x:
       i += 1
