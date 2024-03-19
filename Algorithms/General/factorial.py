@@ -1,8 +1,7 @@
 from math import factorial
 import timeit
 
-# if possible always use math.factorial, is way faster and accepts higher numbers (recursive max depth = 995)
-
+# if possible always use math.factorial, is way faster and accepts higher numbers (recursive max depth)
 def factorial_recursive(N):
     if N == 0:
         return 1

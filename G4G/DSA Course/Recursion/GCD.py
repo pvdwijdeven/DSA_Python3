@@ -1,10 +1,9 @@
-class Solution:
-    def GCD(self,a,b):
-        #code here
-        if b!=0:
-            return self.GCD(b, a%b)
-        else:
-            return a
+def GCD(a, b) -> int:
+	if b != 0:
+		return GCD(a=b, b=a % b)
+	else:
+		return a
 
-sol = Solution()
-print(sol.GCD(15,5))
+
+if __name__ == "__main__":
+	print(GCD(a=15, b=5))
