@@ -1,6 +1,6 @@
 # Function to find maximum number of consecutive steps
 # to gain an increase in altitude with each step.
-def max_steps(arr) -> int:
+def max_climbing_steps(arr) -> int:
     steps = 0
     max_steps = 0
     for i in range(len(arr) - 1):
@@ -14,4 +14,4 @@ def max_steps(arr) -> int:
 
 if __name__ == "__main__":
     arr = [1, 2, 3, 1, 2, 3, 4, 5, 6]
-    print(max_steps(arr=arr))
+    print(max_climbing_steps(arr=arr))
