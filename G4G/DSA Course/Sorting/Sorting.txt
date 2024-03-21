@@ -1,0 +1,31 @@
+Binary array:
+	Partition of quicksort
+    (Lomuto, Hoarse, naive (stable))
+
+Array with 3 values
+	quicksort partitioning (Hoarse / naive (stable)
+Array of size n and small ranged values
+	Counting sort
+Array of size n an range is n2 or n3 or less
+	Radix sort
+Array of uniformly distributed data over a range
+	bucket sort
+When memory writes are costly
+	selection sort
+	cycle sort
+When only adjacent swaps are allowed
+	Bubble sort
+	Cocktail sort (optimized bubble sort)
+When array size is small (10 - 20)
+	selection sort
+	insertion sort
+Wehn available extra memory is less
+	Shell sort
+
+General purpose sorting:
+	MergeSort
+	HeapSort
+	QuickSort
+Hybrid:
+	TimeSort
+	IntroSort
