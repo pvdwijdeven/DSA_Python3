@@ -1,19 +1,40 @@
-# Sort an array with three types of elements
-def sort_3_types(arr) -> list[int]:
-    low, mid, high = 0, 0, (len(arr) - 1)
-    while mid <= high:
-        if arr[mid] == 0:
-            arr[low], arr[mid] = arr[mid], arr[low]
-            low += 1
-            mid += 1
-        elif arr[mid] == 1:
-            mid += 1
-        else:
-            arr[high], arr[mid] = arr[mid], arr[high]
-            high -= 1
-    return arr
+# Python3 program to sort an array
+# using bucket sort
+def insertion_sort(b):
+    for i in range(1, len(b)):
+        up = b[i]
+        j = i - 1
+        while j >= 0 and b[j] > up:
+            b[j + 1] = b[j]
+            j -= 1
+        b[j + 1] = up
+    return b
+
+
+def bucket_sort(x):
+    arr = []
+    slot_num = 10  # 10 means 10 slots, each
+    # slot's size is 0.1
+    for i in range(slot_num):
+        arr.append([])
+    # Put array elements in different buckets
+    for j in x:
+        index_b = int(slot_num * j)
+        arr[index_b].append(j)
+    # Sort individual buckets
+    for i in range(slot_num):
+        arr[i] = insertion_sort(arr[i])
+    # concatenate the result
+    k = 0
+    for i in range(slot_num):
+        for j in range(len(arr[i])):
+            x[k] = arr[i][j]
+            k += 1
+    return x
 
 
 if __name__ == "__main__":
-    arr = [0, 1, 2, 1, 0, 0]
-    print(sort_3_types(arr=arr))
+    # Driver Code
+    x = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
+    print("Sorted Array is")
+    print(bucket_sort(x))
