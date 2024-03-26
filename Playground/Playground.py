@@ -1,40 +1,32 @@
-# Python3 program to sort an array
-# using bucket sort
-def insertion_sort(b):
-    for i in range(1, len(b)):
-        up = b[i]
-        j = i - 1
-        while j >= 0 and b[j] > up:
-            b[j + 1] = b[j]
-            j -= 1
-        b[j + 1] = up
-    return b
+def minimumPlatform(self, n, entrance, departure):
 
+    n = len(entrance)
+    # Sort arrival and exit arrays
+    entrance.sort()
+    departure.sort()
 
-def bucket_sort(x):
-    arr = []
-    slot_num = 10  # 10 means 10 slots, each
-    # slot's size is 0.1
-    for i in range(slot_num):
-        arr.append([])
-    # Put array elements in different buckets
-    for j in x:
-        index_b = int(slot_num * j)
-        arr[index_b].append(j)
-    # Sort individual buckets
-    for i in range(slot_num):
-        arr[i] = insertion_sort(arr[i])
-    # concatenate the result
-    k = 0
-    for i in range(slot_num):
-        for j in range(len(arr[i])):
-            x[k] = arr[i][j]
-            k += 1
-    return x
+    # guests_in indicates number of
+    # guests at a time
+    guests_in = 1
+    max_guests = 1
+    time = entrance[0]
+    i = 1
+    j = 0
+    # Similar to merge in merge sort to
+    # process all events in sorted order
+    while i < n and j < n:
+        # If next event in sorted order is
+        # arrival, increment count of guests
+        if entrance[i] <= departure[j]:
+            guests_in += 1
+            # Update max_guests if needed
+            if guests_in > max_guests:
+                max_guests = guests_in
+                time = entrance[i]
+            # increment index of arrival array
+            i += 1
+        else:
+            guests_in = guests_in - 1
+            j += 1
 
-
-if __name__ == "__main__":
-    # Driver Code
-    x = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
-    print("Sorted Array is")
-    print(bucket_sort(x))
+        return max_guests

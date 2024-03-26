@@ -34,5 +34,5 @@ def bucket_sort(arr, no_of_buckets):
 
 if __name__ == "__main__":
     arr = [9.8, 0.6, 10.1, 1.9, 3.07, 3.04, 5.0, 8.0, 4.8, 7.68]
-    bucket_sort(arr, 5)
+    bucket_sort(arr, no_of_buckets=5)
     print("Sorted array: ", arr)
