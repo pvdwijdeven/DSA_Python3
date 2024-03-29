@@ -6,13 +6,19 @@ def matrix_boundary_traversal(matrix):
         res.append(matrix[0][col])
     for row in range(1, rows):
         res.append(matrix[row][cols - 1])
-    for col in range(cols - 2, -1, -1):
-        res.append(matrix[rows - 1][col])
-    for row in range(rows - 2, 0, -1):
-        res.append(matrix[row][0])
+    if rows > 1:
+        for col in range(cols - 2, -1, -1):
+            res.append(matrix[rows - 1][col])
+    if cols > 1:
+        for row in range(rows - 2, 0, -1):
+            res.append(matrix[row][0])
     return res
 
 
 if __name__ == "__main__":
     mat = [[10, 20, 30, 40], [15, 25, 35, 45], [27, 29, 37, 48], [32, 33, 39, 50]]
     print(matrix_boundary_traversal(matrix=mat))
+    A = [[1, 2, 3]]
+    B = [[1], [2], [3]]
+    print(matrix_boundary_traversal(A))
+    print(matrix_boundary_traversal(B))
