@@ -1,4 +1,4 @@
-# Find if sum is in 1 or more pais: two Pointers Approach
+# Find if sum is in 1 or more pairs: two Pointers Approach
 def sum_in_pair(arr, x) -> list[tuple[int, int]]:
   res = []
   i = 0
