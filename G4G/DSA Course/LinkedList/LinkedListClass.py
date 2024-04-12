@@ -284,7 +284,7 @@ class LinkedList:
             return cur2.data
 
     @classmethod
-    def join_the_lists(cls, head1, head2) -> Any:
+    def join_the_lists(cls, head1, head2) -> "LinkedList":
         # Join linked list head2 with current one
         if not head1.head:
             return head2.head
@@ -375,6 +375,128 @@ class LinkedList:
             return False
         return True
 
+    @classmethod
+    def sorted_merge(cls, head1, head2):
+        if head1 == None:
+            return head2
+        if head2 == None:
+            return head1
+        head = None
+        tail = None
+        if head1.data <= head2.data:
+            head = tail = head1
+            head1 = head1.next
+        else:
+            head = tail = head2
+            head2 = head2.next
+
+        while head1 != None and head2 != None:
+            if head1.data <= head2.data:
+                tail.next = head1
+                tail = head1
+                head1 = head1.next
+            else:
+                tail.next = head2
+                tail = head2
+                head2 = head2.next
+
+        if head1 == None:
+            tail.next = head2
+        else:
+            tail.next = head1
+        return head
+
+    def reverse_k(self, k):
+        head = self.head
+        curr = head
+        prev_first = head
+        first_pass = True
+        while curr != None:
+            first, prev = None, None
+            count = 0
+            while curr != None and count < k:
+                next = curr.next
+                curr.next = prev
+                prev = curr
+                curr = next
+                count += 1
+            if first_pass:
+                head = prev
+                first_pass = False
+            else:
+                if prev_first:
+                    prev_first.next = prev
+                prev_first = first
+        self.head = head
+        return self.head
+
+    def detect_remove_loop(self, remove=True):
+        slow = self.head
+        fast = self.head
+
+        while fast != None and fast.next != None:
+            assert slow
+            slow = slow.next
+            prev = fast.next
+            fast = fast.next.next
+
+            if slow == fast:
+                slow = self.head
+
+                while fast != slow:
+                    fast = fast.next
+                    assert slow
+                    slow = slow.next
+                    prev = prev.next
+
+                prev.next = None
+                return
+
+    def merge_sort(self, head):
+        if head is None or head.next is None:
+            return head
+        middle = self.get_middle(head=head)
+        nexttomiddle = middle.next
+        middle.next = None
+        left = self.merge_sort(head=head)
+        right = self.merge_sort(head=nexttomiddle)
+        sortedlist = self.sorted_merge(head1=left, head2=right)
+        return sortedlist
+
+    def append(self, new_value):
+        new_node = Node(data=new_value)
+        if self.head is None:
+            self.head = new_node
+            return
+        curr_node = self.head
+        while curr_node.next is not None:
+            curr_node = curr_node.next
+        curr_node.next = new_node
+
+    def sorted_merge(self, head1, head2):
+        result = None
+        if head1 is None:
+            return head2
+        if head2 is None:
+            return head1
+        if head1.data <= head2.data:
+            result = head1
+            result.next = self.sorted_merge(head1=head1.next, head2=head2)
+        else:
+            result = head2
+            result.next = self.sorted_merge(head1=head1, head2=head2.next)
+        return result
+
+    def get_middle(self, head):
+        if head is None:
+            return head
+        slow = head
+        fast = head
+        while fast.next is not None and fast.next.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+
 
 if __name__ == "__main__":
     l1 = "1->2->3->4->5"
@@ -422,6 +544,7 @@ if __name__ == "__main__":
 
     L4 = LinkedList(arr=[1, 2, 3, 4, 5])
     L5 = LinkedList(arr=[6, 7, 8, 9])
+    L6 = LinkedList()
     L6 = LinkedList.join_the_lists(head1=L4, head2=L5)
     print(L6.print_list())
 
@@ -429,3 +552,6 @@ if __name__ == "__main__":
     print(LinkedList.are_identical(head1=L3, head2=L6))
     print(L2.maximum())
     print(L2.minimum())
+
+    L6.reverse_k(3)
+    print(L6.print_list())

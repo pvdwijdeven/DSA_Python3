@@ -183,7 +183,7 @@ def max_AND(arr) -> int:
 
 # This function shows if a number is sparse,
 # meaning that is has no consecutive set bits
-def isSparse(n) -> bool:
+def is_sparse(n) -> bool:
     set_bits = 0
     while n:
         if n & 1:

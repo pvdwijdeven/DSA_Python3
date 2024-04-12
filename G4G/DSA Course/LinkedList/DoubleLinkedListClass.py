@@ -287,6 +287,52 @@ class DoubleLinkedList:
                     self.tail = temp
                 return self.head
 
+    def merge(self, head1, head2):
+        if head1 is None:
+            return head2
+        if head2 is None:
+            return head1
+        if head1.data < head2.data:
+            head1.next = self.merge(head1.next, head2)
+            head1.next.prev = head1
+            head1.prev = None
+            return head1
+        else:
+            head2.next = self.merge(head1, head2.next)
+            head2.next.prev = head2
+            head2.prev = None
+            return head2
+
+    def merge_sort(self, head):
+        if head is None:
+            return head
+        if head.next is None:
+            return head
+        second = self.split(head)
+        head = self.merge_sort(head)
+        second = self.merge_sort(second)
+        return self.merge(head, second)
+
+    def split(self, head):
+        fast = slow = head
+        while True:
+            if fast.next is None:
+                break
+            if fast.next.next is None:
+                break
+            fast = fast.next.next
+            slow = slow.next
+        temp = slow.next
+        slow.next = None
+        return temp
+
+    def push(self, new_data):
+        new_node = Node(new_data)
+        new_node.next = self.head
+        if self.head is not None:
+            self.head.prev = new_node
+        self.head = new_node
+
 
 if __name__ == "__main__":
     L1 = DoubleLinkedList(arr="1<->2<->3<->4<->5")
