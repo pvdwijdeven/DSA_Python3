@@ -161,6 +161,8 @@ class DoubleLinkedList:
         if not self.head:
             return None
         if not self.head.next:
+            self.head = None
+            self.tail = None
             return None
         else:
             self.head = self.head.next
@@ -174,9 +176,8 @@ class DoubleLinkedList:
             return
         if self.head == ptr:
             self.delete_head()
-        temp = ptr.next
-        ptr.data = temp.data
-        ptr.next = temp.next
+        ptr.prev.next = ptr.next
+        ptr.next.prev = ptr.prev
 
     def delete_Nth_node(self, N) -> Node | None:
         cur = self.head
@@ -254,6 +255,7 @@ class DoubleLinkedList:
         temp = Node(data=value)
         if not self.head:
             return temp
+        assert self.tail
         if self.head.data <= self.tail.data:
             if value < self.head.data:
                 self.insert_in_head(data=value)
