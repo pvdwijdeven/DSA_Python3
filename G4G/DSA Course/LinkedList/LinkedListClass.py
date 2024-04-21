@@ -376,7 +376,7 @@ class LinkedList:
         return True
 
     @classmethod
-    def sorted_merge(cls, head1, head2):
+    def sorted_merge_method(cls, head1, head2):
         if head1 == None:
             return head2
         if head2 == None:
