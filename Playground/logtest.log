@@ -1,0 +1,40 @@
+2024-04-22 20:18:42 - DEBUG - This is a debug message (Logger.py: line 104)
+2024-04-22 20:18:42 - INFO - This is an info message (Logger.py: line 105)
+2024-04-22 20:18:42 - WARNING - This is a warning message (Logger.py: line 106)
+2024-04-22 20:18:42 - ERROR - This is an error message (Logger.py: line 107)
+2024-04-22 20:18:42 - CRITICAL - This is a critical message (Logger.py: line 108)
+2024-04-22 20:21:33 - DEBUG    (Logger.py      : line 104  ) - This is a debug message 
+2024-04-22 20:21:33 - INFO     (Logger.py      : line 105  ) - This is an info message 
+2024-04-22 20:21:33 - WARNING  (Logger.py      : line 106  ) - This is a warning message 
+2024-04-22 20:21:33 - ERROR    (Logger.py      : line 107  ) - This is an error message 
+2024-04-22 20:21:33 - CRITICAL (Logger.py      : line 108  ) - This is a critical message 
+2024-04-22 20:22:21 | DEBUG    | Logger.py       | line 104  ) } This is a debug message 
+2024-04-22 20:22:21 | INFO     | Logger.py       | line 105  ) } This is an info message 
+2024-04-22 20:22:21 | WARNING  | Logger.py       | line 106  ) } This is a warning message 
+2024-04-22 20:22:21 | ERROR    | Logger.py       | line 107  ) } This is an error message 
+2024-04-22 20:22:21 | CRITICAL | Logger.py       | line 108  ) } This is a critical message 
+2024-04-22 20:22:43 | DEBUG    | Logger.py       | line 104   | This is a debug message 
+2024-04-22 20:22:43 | INFO     | Logger.py       | line 105   | This is an info message 
+2024-04-22 20:22:43 | WARNING  | Logger.py       | line 106   | This is a warning message 
+2024-04-22 20:22:43 | ERROR    | Logger.py       | line 107   | This is an error message 
+2024-04-22 20:22:43 | CRITICAL | Logger.py       | line 108   | This is a critical message 
+2024-04-22 20:23:27 | DEBUG    | Logger.py       | line 104  | This is a debug message 
+2024-04-22 20:23:27 | INFO     | Logger.py       | line 105  | This is an info message 
+2024-04-22 20:23:27 | WARNING  | Logger.py       | line 106  | This is a warning message 
+2024-04-22 20:23:27 | ERROR    | Logger.py       | line 107  | This is an error message 
+2024-04-22 20:23:27 | CRITICAL | Logger.py       | line 108  | This is a critical message 
+2024-04-22 20:24:19 | DEBUG    | Logger.py       | line 104  | This is a debug message 
+2024-04-22 20:24:19 | INFO     | Logger.py       | line 105  | This is an info message 
+2024-04-22 20:24:19 | WARNING  | Logger.py       | line 106  | This is a warning message 
+2024-04-22 20:24:19 | ERROR    | Logger.py       | line 107  | This is an error message 
+2024-04-22 20:24:19 | CRITICAL | Logger.py       | line 108  | This is a critical message 
+2024-04-22 20:24:56 | DEBUG    | Logger.py       | line 106  | This is a debug message 
+2024-04-22 20:24:56 | INFO     | Logger.py       | line 107  | This is an info message 
+2024-04-22 20:24:56 | WARNING  | Logger.py       | line 108  | This is a warning message 
+2024-04-22 20:24:56 | ERROR    | Logger.py       | line 109  | This is an error message 
+2024-04-22 20:24:56 | CRITICAL | Logger.py       | line 110  | This is a critical message 
+2024-04-22 20:25:29 | DEBUG    | Logger.py       | line 106  | This is a debug message 
+2024-04-22 20:25:29 | INFO     | Logger.py       | line 107  | This is an info message 
+2024-04-22 20:25:29 | WARNING  | Logger.py       | line 108  | This is a warning message 
+2024-04-22 20:25:29 | ERROR    | Logger.py       | line 109  | This is an error message 
+2024-04-22 20:25:29 | CRITICAL | Logger.py       | line 110  | This is a critical message 
