@@ -1,6 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 from colorama import Fore, Back
+from typing import Dict
 
 
 class CustomFormatter(logging.Formatter):
@@ -20,7 +21,7 @@ class CustomFormatter(logging.Formatter):
     format_warning: str = "%(levelname)s: %(message)s"
     format_error: str = "%(levelname)s: %(message)s"
     format_critical: str = "%(levelname)s (%(filename)s: line %(lineno)d) - %(message)s"
-    FORMATS: dict[int, str] = {
+    FORMATS: Dict[int, str] = {
         logging.DEBUG: Fore.GREEN + format_debug + Fore.RESET,
         logging.INFO: Fore.BLUE + format_info + Fore.RESET,
         logging.WARNING: Fore.YELLOW + format_warning + Fore.RESET,
@@ -100,7 +101,7 @@ class ColorLogger(logging.getLoggerClass()):
 
 
 def main() -> None:
-    clog: logging.Logger = ColorLogger(
+    clog: ColorLogger = ColorLogger(
         filename="Playground/logtest.log", level_console=ColorLogger.DEBUG
     )
     clog.debug(msg="This is a debug message")

@@ -1,5 +1,12 @@
+from typing import List, Dict, Tuple, Callable, Any
+import timeit
+from statistics import mean, median
+import re
+from Logger import ColorLogger
+
+
 def open_file_with_encoding(
-    filename: str, encodings: list[str] | None = None
+    filename: str, encodings: List[str] | None = None, logger: ColorLogger | None = None
 ) -> str | None:
     """
     Open a file with different encodings.
@@ -116,29 +123,30 @@ def open_file_with_encoding(
             "shift_jis_2004",
             "shift_jisx0213",
         ]
-
+    if logger is None:
+        clog: ColorLogger = ColorLogger(
+            level_file=ColorLogger.DEBUG, level_console=ColorLogger.INFO
+        )
+    else:
+        clog = logger
     for encoding in encodings:
         try:
             with open(file=filename, mode="r", encoding=encoding) as file:
                 content: str = file.read()
-            print(f"Encoding used: {encoding}")
+            clog.info(msg=f"Encoding used: {encoding}")
             return content
         except UnicodeDecodeError:
-            print(
-                f"UnicodeDecodeError: Can't decode file {filename} using {encoding} encoding."
+            clog.info(
+                msg=f"UnicodeDecodeError: Can't decode file {filename} using {encoding} encoding."
             )
         except Exception as e:
-            print(f"An error occurred while opening the file {filename}: {e}")
+            clog.error(msg=f"An error occurred while opening the file {filename}: {e}")
             return None
 
-    print(f"Failed to read file {filename} with any of the provided encodings.")
+    clog.error(
+        msg=f"Failed to read file {filename} with any of the provided encodings."
+    )
     return None
-
-
-import timeit
-from typing import Callable, Any
-from statistics import mean, median
-import re
 
 
 def round_to_nearest_zero(number) -> str:
@@ -174,7 +182,7 @@ def measure_speed(repeat_count: int = 5, test_count: int = 1000):
     def decorator(func: Callable[..., Any]):
         def wrapper(*args, **kwargs):
             timer = timeit.Timer(stmt=lambda: func(*args, **kwargs))
-            times: list[float] = timer.repeat(repeat=repeat_count, number=test_count)
+            times: List[float] = timer.repeat(repeat=repeat_count, number=test_count)
             print(
                 f"Function '{func.__name__}' has been tested {repeat_count} times with {test_count} tests per run."
             )
