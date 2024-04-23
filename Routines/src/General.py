@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple, Callable, Any
+from typing import List, Callable, Any
 import timeit
 from statistics import mean, median
 import re
@@ -164,7 +164,9 @@ def round_to_nearest_zero(number) -> str:
         return str(object=round(number=n, ndigits=2))
 
 
-def measure_speed(repeat_count: int = 5, test_count: int = 1000):
+def measure_speed(
+    repeat_count: int = 5, test_count: int = 1000
+) -> Callable[..., Callable[..., Any]]:
     """
     A decorator for measuring the execution speed of a function.
 
@@ -179,14 +181,14 @@ def measure_speed(repeat_count: int = 5, test_count: int = 1000):
         Callable[..., Any]: The decorated function which will print the average execution time when called.
     """
 
-    def decorator(func: Callable[..., Any]):
-        def wrapper(*args, **kwargs):
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
+        def wrapper(*args, **kwargs) -> Any:
             timer = timeit.Timer(stmt=lambda: func(*args, **kwargs))
             times: List[float] = timer.repeat(repeat=repeat_count, number=test_count)
             print(
                 f"Function '{func.__name__}' has been tested {repeat_count} times with {test_count} tests per run."
             )
-            print(f"mean   : {round_to_nearest_zero(number=mean(times))} sec.")
+            print(f"mean   : {round_to_nearest_zero(number=mean(data=times))} sec.")
             print(f"median : {round_to_nearest_zero(number=median(data=times))} sec.")
             print(f"fastest: {round_to_nearest_zero(number=min(times))} sec.")
             print(f"slowest: {round_to_nearest_zero(number=max(times))} sec.")
@@ -202,7 +204,7 @@ if __name__ == "__main__":
     @measure_speed()
     def test() -> int:
         x = 0
-        for x in range(10):
+        for x in range(1000):
             x += 1
         return x
 
