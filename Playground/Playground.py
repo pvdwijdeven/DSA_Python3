@@ -1,46 +1,84 @@
-def guesser(n, guess) -> list[int]:
-    res: list[int] = [-1] * n
-    check1: int = guess(0, 1, "min")  # 1 1 2
-    check2: int = guess(1, 2, "min")  # 2 1 1
-    check3: int = guess(0, 2, "min")  # 1
-    check4: int = guess(0, 1, "max")  # 2 3 3
-    check5: int = guess(1, 2, "max")  # 3 3 3
-    check6: int = guess(0, 2, "max")  # 3
-    if check1 == check3:
-        res[0] = check1
-    elif check4 == check6:
-        res[0] = check4
-    elif check1 == check2:
-        res[0] = check4
-    elif check4 == check5:
-        res[0] = check1
-    res[1] = check1 if check1 != res[0] else check4
-    res[2] = check3 if check3 != res[0] else check6
-    for x in range(3, n):
-        x_max: int = guess(x - 1, x, "max")
-        y_max: int = guess(x - 1, x, "min")
-        if x_max == res[x - 1]:
-            res[x] = y_max
-        else:
-            res[x] = x_max
+def get_points(points):
+    n = len(points) - 2
+    res = (n * (n + 1) * (n + 2)) // 6
     return res
 
 
-def guess(a: int, b: int, c: str) -> int:
-    if c == "max":
-        return max(lst[a], lst[b])
-    else:
-        return min(lst[a], lst[b])
+def count_col_triang(col_list):
+
+    colors = set()
+    points = {}
+    for x in col_list:
+        colors.add(x[1])
+        if x[1] not in points:
+            points[x[1]] = []
+        points[x[1]].append(x[0])
+    total_points = sum([len(x) for x in points.values()])
+    res = {}
+    for color in points:
+        res[color] = 0
+        if len(points[color]) >= 3:
+            res[color] = get_points(points[color])
+
+    total = sum(res.values())
+    mx = 0
+    mx_col = []
+    for x in res:
+        if res[x] > mx:
+            mx = res[x]
+            mx_col = [x]
+        elif res[x] == mx:
+            mx_col.append(x)
+    mx_col.append(mx)
+    print(([total_points, len(colors), total, mx_col]))
+    return [total_points, len(colors), total, mx_col]
 
 
-test_lst: list[list[int]] = [
-    [1, 2, 3],
-    [1, 3, 2],
-    [2, 1, 3],
-    [2, 3, 1],
-    [3, 1, 2],
-    [3, 2, 1],
-]
-for lst in test_lst:
-    res: list[int] = guesser(n=len(lst), guess=guess)
-    print(res, res == lst)
+def fixed_tests():
+    assert count_col_triang(
+        col_list=[
+            [[3, -4], "blue"],
+            [[-7, -1], "red"],
+            [[7, -6], "yellow"],
+            [[2, 5], "yellow"],
+            [[1, -5], "red"],
+            [[-1, 4], "red"],
+            [[1, 7], "red"],
+            [[-3, 5], "red"],
+            [[-3, -5], "blue"],
+            [[4, 1], "blue"],
+        ]
+    ) == [10, 3, 11, ["red", 10]]
+
+    assert count_col_triang(
+        col_list=[
+            [[3, -4], "blue"],
+            [[-7, -1], "red"],
+            [[7, -6], "yellow"],
+            [[2, 5], "yellow"],
+            [[1, -5], "red"],
+            [[1, 1], "red"],
+            [[1, 7], "red"],
+            [[1, 4], "red"],
+            [[-3, -5], "blue"],
+            [[4, 1], "blue"],
+        ]
+    ) == [10, 3, 7, ["red", 6]]
+
+    assert count_col_triang(
+        col_list=[
+            [[1, -2], "red"],
+            [[7, -6], "yellow"],
+            [[2, 5], "yellow"],
+            [[1, -5], "red"],
+            [[1, 1], "red"],
+            [[1, 7], "red"],
+            [[1, 4], "red"],
+            [[-3, -5], "blue"],
+            [[4, 1], "blue"],
+        ]
+    ) == [9, 3, 0, []]
+
+
+if __name__ == "__main__":
+    fixed_tests()
