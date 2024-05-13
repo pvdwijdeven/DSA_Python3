@@ -1,3 +1,10 @@
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.left = None
+        self.right = None
+
+
 class Solution:
     # Function to return the maximum sum of non-adjacent nodes.
     def max_sum(self, root):
