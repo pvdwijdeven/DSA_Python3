@@ -1,28 +1,75 @@
+from typing import List
+from collections import deque
+
+
 class Solution:
-    # Function to return the maximum sum of non-adjacent nodes.
-    def max_sum(self, root):
-        if not root:
-            return 0, 0
+    def orangesRotting(self, grid: List[List[int]]) -> int:
 
-        no_root_l, root_l = self.max_sum(root.left)
-        no_root_r, root_r = self.max_sum(root.right)
+        # number of rows
+        rows = len(grid)
+        if rows == 0:  # check if grid is empty
+            return -1
 
-        root_sum_max = max(
-            root.data,
-            root.data + no_root_l,
-            root.data + no_root_r,
-            root.data + no_root_r + no_root_l,
-        )
-        no_root_sum_max = max(
-            root_l,
-            root_r,
-            root_l + root_r,
-            no_root_l + no_root_r,
-            root_l + no_root_r,
-            root_r + no_root_l,
-        )
+        # number of columns
+        cols = len(grid[0])
 
-        return no_root_sum_max, root_sum_max
+        # keep track of fresh oranges
+        fresh_cnt = 0
 
-    def getMaxSum(self, root):
-        return max(self.max_sum(root))
+        # queue with rotten oranges (for BFS)
+        rotten = deque()
+
+        # visit each cell in the grid
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 2:
+                    # add the rotten orange coordinates to the queue
+                    rotten.append((r, c))
+                elif grid[r][c] == 1:
+                    # update fresh oranges count
+                    fresh_cnt += 1
+
+        # keep track of minutes passed.
+        minutes_passed = 0
+
+        # If there are rotten oranges in the queue and there are still fresh oranges in the grid keep looping
+        while rotten and fresh_cnt > 0:
+
+            # update the number of minutes passed
+            # it is safe to update the minutes by 1, since we visit oranges level by level in BFS traversal.
+            minutes_passed += 1
+
+            # process rotten oranges on the current level
+            for _ in range(len(rotten)):
+                x, y = rotten.popleft()
+
+                # visit all the adjacent cells
+                for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    # calculate the coordinates of the adjacent cell
+                    xx, yy = x + dx, y + dy
+                    # ignore the cell if it is out of the grid boundary
+                    if xx < 0 or xx == rows or yy < 0 or yy == cols:
+                        continue
+                    # ignore the cell if it is empty '0' or visited before '2'
+                    if grid[xx][yy] == 0 or grid[xx][yy] == 2:
+                        continue
+
+                    # update the fresh oranges count
+                    fresh_cnt -= 1
+
+                    # mark the current fresh orange as rotten
+                    grid[xx][yy] = 2
+
+                    # add the current rotten to the queue
+                    rotten.append((xx, yy))
+
+        # return the number of minutes taken to make all the fresh oranges to be rotten
+        # return -1 if there are fresh oranges left in the grid (there were no adjacent rotten oranges to make them rotten)
+        return minutes_passed if fresh_cnt == 0 else -1
+
+
+s = Solution()
+
+print(s.orangesRotting([[0, 1, 2], [0, 1, 2], [2, 1, 1]]))
+print(s.orangesRotting([[2, 2, 0, 1]]))
+print(s.orangesRotting([[1, 2], [0, 2]]))

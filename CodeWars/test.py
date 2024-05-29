@@ -1,87 +1,56 @@
-from collections import namedtuple
+def get_pos(datex) -> list[tuple[int, str]]:
+    pos = []
+    date_s = datex.split("-")
+    if int(date_s[1]) <= 12:
+        pos.append((datex, ""))
+    if int(date_s[2]) <= 12 and date_s[1] != date_s[2]:
+        pos.append(("-".join([date_s[0], date_s[2], date_s[1]]), "inv"))
+    pos = list([(int(p[0].replace("-", "")), p[1]) for p in pos])
+    return pos
 
 
-def create_namedtuple_cls(cls_name, fields):
-    return namedtuple(cls_name, fields, rename=True)
+def check_date(record) -> int:
+    correct = 0
+    date1: list[tuple[int, str]] = get_pos(record[0])
+    date2: list[tuple[int, str]] = get_pos(record[1])
+    inverted = False
+    for d1 in date1:
+        for d2 in date2:
+            if d1[0] < d2[0]:
+                if d1[1] == "inv" or d2[1] == "inv":
+                    inverted = True
+                correct += 1
+    if correct == 1:
+        if inverted:
+            return 1
+        else:
+            return 0
+
+    return 2
+
+
+def check_dates(records) -> list[int]:
+    res: list[int] = [0, 0, 0]
+    for record in records:
+        res[check_date(record)] += 1
+    return res
 
 
 import codewars_test as test
-from collections import namedtuple, defaultdict
-import traceback
 
 
-def test_namedtuple_creation(cls_name, entries):
-    passed = True
-    try:
-        _cls = create_namedtuple_cls(cls_name, tuple(p[0] for p in entries))
-        if _cls.__name__ != cls_name:
-            passed = False
-            test.assert_equals(_cls.__name__, cls_name)
-        if _cls._fields != tuple(p[0] for p in entries):
-            passed = False
-            test.assert_equals(_cls._fields, tuple(p[0] for p in entries))
-        if _cls.__getattribute__ != tuple.__getattribute__:
-            passed = False
-            test.fail("No metaprogramming! __getattribute__ should be intact")
-        if _cls.__getitem__ != tuple.__getitem__:
-            passed = False
-            test.fail("No metaprogramming! __getitem__ should be intact")
+@test.describe("Sample test")
+def tests():
 
-        # ensure returned class is a namedtuple
-        instance = tuple.__new__(_cls, (p[1] for p in entries))
+    records = [
+        ["2015-04-04", "2015-05-13"],  # correct
+        ["2013-06-18", "2013-08-05"],  # correct
+        ["2001-02-07", "2001-03-01"],  # correct
+        ["2011-10-08", "2011-08-14"],  # recoverable
+        ["2009-08-21", "2009-04-12"],  # recoverable
+        ["1996-01-24", "1996-03-09"],  # uncertain
+        ["2000-10-09", "2000-11-20"],  # uncertain
+        ["2002-02-07", "2002-12-10"],
+    ]  # uncertain
 
-        # should not contain extra attributes
-        extra_attrs = list(
-            set(attr for attr in dir(instance) if not attr.startswith("_"))
-            - set(dir(tuple))
-        )
-        if len(extra_attrs) != len([p[0] for p in entries]):
-            passed = False
-            test.fail(
-                f"namedtuple contains extra attributes!: {extra_attrs} is not equal to {[p[0] for p in entries]}"
-            )
-
-        # test attribute access
-        for k, v in entries:
-            actual = eval(f"instance.{k}")
-            if actual != v:
-                passed = False
-                test.assert_equals(actual, v)
-
-        # test dict access via ._asdict()
-        instance_dict = instance._asdict()
-        for k, v in entries:
-            actual = instance_dict[k]
-            if actual != v:
-                passed = False
-                test.assert_equals(actual, v)
-
-        # test getattr access
-        for k, v in entries:
-            actual = getattr(instance, k)
-            if actual != v:
-                passed = False
-                test.assert_equals(actual, v)
-
-        test.expect(passed, f"Overall namedtuple test failed")
-    except Exception:
-        test.fail(
-            f"An exception is thrown during attribute access test:\n{traceback.format_exc()}"
-        )
-
-
-@test.describe("Sample Tests")
-def sample_tests():
-    entries = [
-        ("pc", 3.08567758149137e16),
-        ("AU", 149597870700),
-        ("km", 10**3),
-        ("mm", 10**-3),
-        ("µm", 10**-6),
-        ("nm", 10**-9),
-    ]
-    cls_name = "LENGTH_UNITS"
-
-    @test.it(f"Testing for\nclass name: {cls_name}\nproperties: {entries}")
-    def _():
-        test_namedtuple_creation(cls_name, entries)
+    test.assert_equals(check_dates(records), [3, 2, 3])
