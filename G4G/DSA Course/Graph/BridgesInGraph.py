@@ -26,6 +26,7 @@ class Graph:
 
     def bridgeUtil(self, u, visited, parent, low, disc):
         res = []
+
         # Mark the current node as visited and print it
         visited[u] = True
 
@@ -40,7 +41,7 @@ class Graph:
             # in DFS tree and recur for it
             if visited[v] == False:
                 parent[v] = u
-                res += self.bridgeUtil(v, visited, parent, low, disc)
+                self.bridgeUtil(v, visited, parent, low, disc)
 
                 # Check if the subtree rooted with v has a connection to
                 # one of the ancestors of u
